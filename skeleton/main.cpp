@@ -8,12 +8,15 @@
 #include "RenderUtils.hpp"
 #include "callbacks.hpp"
 
+#include "Particle.h"
+
 #include <iostream>
 
 std::string display_text = "This is a test";
 
 
 using namespace physx;
+using namespace std;
 
 PxDefaultAllocator		gAllocator;
 PxDefaultErrorCallback	gErrorCallback;
@@ -29,6 +32,8 @@ PxPvd*                  gPvd        = NULL;
 PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
+
+Particle* myParticle_ = nullptr; // Particula
 
 
 // Initialize physics engine
@@ -54,7 +59,10 @@ void initPhysics(bool interactive)
 	sceneDesc.filterShader = contactReportFilterShader;
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
-	}
+
+	
+	myParticle_ = new Particle(CreateShape(PxSphereGeometry(3)), 1.0f, Vector4(1.0f, 0.4f, 0.2f, 1.0f));
+}
 
 
 // Function to configure what happens in each step of physics
@@ -66,6 +74,8 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
+
+	myParticle_->integrate(t); // Update de la partícula
 }
 
 // Function to clean data
@@ -82,8 +92,11 @@ void cleanupPhysics(bool interactive)
 	PxPvdTransport* transport = gPvd->getTransport();
 	gPvd->release();
 	transport->release();
-	
+
 	gFoundation->release();
+
+	delete myParticle_;
+	myParticle_ = nullptr;
 	}
 
 // Function called when a key is pressed
@@ -93,7 +106,11 @@ void keyPress(unsigned char key, const PxTransform& camera)
 
 	switch(toupper(key))
 	{
-	//case 'B': break;
+	case 'B': 
+	{
+		/*myParticle_->setAcceleration(-2.0f, 0.0f, 0.0f);*/
+	}
+		break;
 	//case ' ':	break;
 	case ' ':
 	{
