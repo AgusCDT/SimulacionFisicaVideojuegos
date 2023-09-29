@@ -1,10 +1,10 @@
 #include "Particle.h"
 
-Particle::Particle(physx::PxShape* shape, float mass, Vector4 color) {
-	vel_ = { -10.0f, 0, 0 };
-	accel_ = { 0, 0, 0 };
+Particle::Particle(physx::PxShape* shape, float mass, Vector4 color, Vector3 accel, float damping) {
+	vel_ = { 0.0f, 0.0f, 0.0f };
+	accel_ = accel;
 	inverse_mass_ = 1 / mass;
-	damping_ = 1;
+	damping_ = damping;
 	tr_.p = { 0, 0, 0 };
 	tr_.q = { 0, 0, 0, 0 };
 

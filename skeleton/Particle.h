@@ -5,7 +5,7 @@ using namespace physx;
 
 class Particle : public RenderItem {
 public: 
-	Particle(physx::PxShape* _shape, float mass, Vector4 color);
+	Particle(physx::PxShape* _shape, float mass, Vector4 color, Vector3 accel, float damping);
 	~Particle();
 
 	void integrate(double t);

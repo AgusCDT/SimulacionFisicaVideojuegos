@@ -61,7 +61,7 @@ void initPhysics(bool interactive)
 	gScene = gPhysics->createScene(sceneDesc);
 
 	
-	myParticle_ = new Particle(CreateShape(PxSphereGeometry(3)), 1.0f, Vector4(1.0f, 0.4f, 0.2f, 1.0f));
+	myParticle_ = new Particle(CreateShape(PxSphereGeometry(3)), 1.0f, Vector4(1.0f, 0.4f, 0.2f, 1.0f), Vector3(2.0f, 0.0f, 0.0f), 0.95);
 }
 
 
