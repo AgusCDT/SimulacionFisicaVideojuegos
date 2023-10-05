@@ -1,11 +1,11 @@
 #include "Particle.h"
 
-Particle::Particle(physx::PxShape* shape, float mass, Vector4 color, Vector3 accel, float damping) {
-	vel_ = { 0.0f, 0.0f, 0.0f };
+Particle::Particle(PxShape* shape, float mass, Vector4 color, Vector3 vel, Vector3 accel, float damping) {
+	vel_ = vel;
 	accel_ = accel;
 	inverse_mass_ = 1 / mass;
 	damping_ = damping;
-	tr_.p = { 0, 0, 0 };
+	tr_.p = GetCamera()->getTransform().p;
 	tr_.q = { 0, 0, 0, 0 };
 
 	renderItem_ = new RenderItem(shape, &tr_, color);

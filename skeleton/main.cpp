@@ -9,6 +9,8 @@
 #include "callbacks.hpp"
 
 #include "Particle.h"
+#include "Suelo.h"
+//#include "Diana.h"
 
 #include <iostream>
 
@@ -33,8 +35,13 @@ PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 
-Particle* myParticle_ = nullptr; // Particula
 
+Particle* myParticle_ = nullptr; // Particula
+vector<Particle*> particles_;
+
+Suelo* suelo_ = nullptr;
+
+//Diana* diana_ = nullptr;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -58,10 +65,11 @@ void initPhysics(bool interactive)
 	sceneDesc.cpuDispatcher = gDispatcher;
 	sceneDesc.filterShader = contactReportFilterShader;
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
-	gScene = gPhysics->createScene(sceneDesc);
+	gScene = gPhysics->createScene(sceneDesc);	
 
-	
-	myParticle_ = new Particle(CreateShape(PxSphereGeometry(3)), 1.0f, Vector4(1.0f, 0.4f, 0.2f, 1.0f), Vector3(2.0f, 0.0f, 0.0f), 0.95);
+	suelo_ = new Suelo(160, 20, 160, Vector4(0.0f, 0.0f, 0.0f, 1.0f)); // "Suelo"
+
+	/*diana_ = new Diana(10, 10, 10, Vector4(0.0f, 0.0f, 0.0f, 1.0f));*/
 }
 
 
@@ -75,7 +83,13 @@ void stepPhysics(bool interactive, double t)
 	gScene->simulate(t);
 	gScene->fetchResults(true);
 
-	myParticle_->integrate(t); // Update de la partícula
+	if (particles_.size() > 0) {
+		for (auto e : particles_) {
+			e->integrate(t); // Actualizamos atributos de cada particula
+		}
+	}
+	
+	//myParticle_->integrate(t); // Update de la partícula
 }
 
 // Function to clean data
@@ -93,11 +107,14 @@ void cleanupPhysics(bool interactive)
 	gPvd->release();
 	transport->release();
 
-	gFoundation->release();
-
-	delete myParticle_;
-	myParticle_ = nullptr;
+	if (particles_.size() > 0) {
+		for (auto e : particles_) {
+			delete e;
+		}
 	}
+
+	gFoundation->release();
+}
 
 // Function called when a key is pressed
 void keyPress(unsigned char key, const PxTransform& camera)
@@ -106,16 +123,50 @@ void keyPress(unsigned char key, const PxTransform& camera)
 
 	switch(toupper(key))
 	{
-	case 'B': 
+	case 'V': // PISTOL
 	{
-		/*myParticle_->setAcceleration(-2.0f, 0.0f, 0.0f);*/
+		myParticle_ = new Particle(CreateShape(PxSphereGeometry(0.4)), // Shape
+			2.0f, // Mass
+			Vector4(1.0f, 0.4f, 0.2f, 1.0f), // Color
+			Vector3(GetCamera()->getDir().x * 35.0f, 0.0f, GetCamera()->getDir().z * 35.0f), // Vel
+			Vector3(0.0f, -1.0f, 0.0f), // Accel
+			0.99f); // Damping
+		particles_.push_back(myParticle_);
 	}
-		break;
-	//case ' ':	break;
-	case ' ':
+	break;
+	case 'B': // ARTILLERY
 	{
-		break;
+		myParticle_ = new Particle(CreateShape(PxSphereGeometry(1.7)),
+			200.0f,
+			Vector4(0.0f, 1.0f, 1.0f, 1.0f),
+			Vector3(GetCamera()->getDir().x * 40.0f, 30.0f, GetCamera()->getDir().z * 40.0f),
+			Vector3(0.0f, -20.0f, 0.0f),
+			0.99f);
+		particles_.push_back(myParticle_);
 	}
+	break;
+	case 'N': // FIREBALL
+	{
+		myParticle_ = new Particle(CreateShape(PxSphereGeometry(0.8)),
+			1.0f,
+			Vector4(1.0f, 0.0f, 0.0f, 1.0f),
+			Vector3(GetCamera()->getDir().x * 10.0f, 0.0f, GetCamera()->getDir().z * 10.0f),
+			Vector3(0.0f, 0.6f, 0.0f),
+			0.9f);
+		particles_.push_back(myParticle_);
+	}
+	break;
+	case 'M': // LASER
+	{
+		myParticle_ = new Particle(CreateShape(PxSphereGeometry(0.2)),
+			0.1f,
+			Vector4(0.0f, 0.0f, 1.0f, 1.0f),
+			Vector3(GetCamera()->getDir().x * 100.0f, 0.0f, GetCamera()->getDir().z * 100.0f),
+			Vector3(0.0f, 0.0f, 0.0f),
+			0.99f);
+		particles_.push_back(myParticle_);
+	}
+	break;
 	default:
 		break;
 	}
