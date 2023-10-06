@@ -37,7 +37,7 @@ ContactReportCallback gContactReportCallback;
 
 
 Particle* myParticle_ = nullptr; // Particula
-vector<Particle*> particles_;
+vector<Particle*> particles_; // CAPAR MAX DE PARTICULAS
 
 Suelo* suelo_ = nullptr;
 
@@ -112,6 +112,7 @@ void cleanupPhysics(bool interactive)
 			delete e;
 		}
 	}
+	// BORRADO POR TIEMPO, Y POR PANTALLA
 
 	gFoundation->release();
 }
@@ -128,9 +129,9 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		myParticle_ = new Particle(CreateShape(PxSphereGeometry(0.4)), // Shape
 			2.0f, // Mass
 			Vector4(1.0f, 0.4f, 0.2f, 1.0f), // Color
-			Vector3(GetCamera()->getDir().x * 35.0f, 0.0f, GetCamera()->getDir().z * 35.0f), // Vel
+			Vector3(GetCamera()->getDir().x * 35.0f, 0.0f, GetCamera()->getDir().z * 35.0f), // Vel  // CAMBIAR A SOLO UN GetCamera()->getDir() * 35
 			Vector3(0.0f, -1.0f, 0.0f), // Accel
-			0.99f); // Damping
+			0.9f); // Damping
 		particles_.push_back(myParticle_);
 	}
 	break;

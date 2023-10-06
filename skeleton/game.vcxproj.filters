@@ -13,6 +13,8 @@
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="Suelo.cpp" />
     <ClCompile Include="Diana.cpp" />
+    <ClCompile Include="ParticleGenerator.cpp" />
+    <ClCompile Include="ParticleSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -28,6 +30,8 @@
     <ClInclude Include="Suelo.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Diana.h" />
+    <ClInclude Include="ParticleGenerator.h" />
+    <ClInclude Include="ParticleSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

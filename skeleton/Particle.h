@@ -7,6 +7,9 @@ using namespace physx;
 class Particle : public RenderItem {
 
 private:
+	/*ParticleType type_;*/   // Enum
+	double lifeTime_;
+
 	PxTransform tr_; // A render item le pasaremos la direccion de este transform, para que se actualice automaticamente
 	Vector3 vel_;
 	Vector3 accel_;
@@ -21,6 +24,8 @@ public:
 	~Particle();
 
 	void integrate(double t);
+
+	virtual Particle* clone() const;
 };
 
 #endif // !PARTICLE_H_
