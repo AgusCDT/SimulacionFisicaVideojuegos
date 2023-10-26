@@ -8,9 +8,10 @@
 #include "RenderUtils.hpp"
 #include "callbacks.hpp"
 
-#include "Particle.h"
+//#include "Particle.h"
 #include "Suelo.h"
 //#include "Diana.h"
+#include "ParticleSystem.h"
 
 #include <iostream>
 
@@ -35,13 +36,18 @@ PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 
-
-Particle* myParticle_ = nullptr; // Particula
-vector<Particle*> particles_; // CAPAR MAX DE PARTICULAS
+#pragma region P1
+//Particle* myParticle_ = nullptr; // Particula
+//vector<Particle*> particles_; // CAPAR MAX DE PARTICULAS
 
 Suelo* suelo_ = nullptr;
 
 //Diana* diana_ = nullptr;
+#pragma endregion
+
+ParticleSystem* particleSystem_ = nullptr;
+
+
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -67,9 +73,13 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);	
 
+#pragma region P1
 	suelo_ = new Suelo(160, 20, 160, Vector4(0.0f, 0.0f, 0.0f, 1.0f)); // "Suelo"
 
 	/*diana_ = new Diana(10, 10, 10, Vector4(0.0f, 0.0f, 0.0f, 1.0f));*/
+#pragma endregion
+
+	particleSystem_ = new ParticleSystem(Vector3{ 0.0f, -10.0f, 0.0f });
 }
 
 
@@ -82,14 +92,17 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
+#pragma region P1
+	//if (particles_.size() > 0) {
+	//	for (auto e : particles_) {
+	//		e->integrate(t); // Actualizamos atributos de cada particula
+	//	}
+	//}
+#pragma endregion	
 
-	if (particles_.size() > 0) {
-		for (auto e : particles_) {
-			e->integrate(t); // Actualizamos atributos de cada particula
-		}
+	if (particleSystem_ != nullptr) {
+		particleSystem_->update(t);
 	}
-	
-	//myParticle_->integrate(t); // Update de la partícula
 }
 
 // Function to clean data
@@ -106,13 +119,14 @@ void cleanupPhysics(bool interactive)
 	PxPvdTransport* transport = gPvd->getTransport();
 	gPvd->release();
 	transport->release();
-
-	if (particles_.size() > 0) {
+#pragma region P1
+	/*if (particles_.size() > 0) {
 		for (auto e : particles_) {
 			delete e;
 		}
-	}
-	// BORRADO POR TIEMPO, Y POR PANTALLA
+	}*/
+#pragma endregion
+	delete particleSystem_;
 
 	gFoundation->release();
 }
@@ -124,48 +138,55 @@ void keyPress(unsigned char key, const PxTransform& camera)
 
 	switch(toupper(key))
 	{
-	case 'V': // PISTOL
+	#pragma region P1
+	//case 'V': // PISTOL
+	//{
+	//	myParticle_ = new Particle(CreateShape(PxSphereGeometry(0.4)), // Shape
+	//		2.0f, // Mass
+	//		Vector4(1.0f, 0.4f, 0.2f, 1.0f), // Color
+	//		Vector3(GetCamera()->getDir().x * 35.0f, 0.0f, GetCamera()->getDir().z * 35.0f), // Vel  // CAMBIAR A SOLO UN GetCamera()->getDir() * 35
+	//		Vector3(0.0f, -1.0f, 0.0f), // Accel
+	//		0.9f); // Damping
+	//	particles_.push_back(myParticle_);
+	//}
+	//break;
+	//case 'B': // ARTILLERY
+	//{
+	//	myParticle_ = new Particle(CreateShape(PxSphereGeometry(1.7)),
+	//		200.0f,
+	//		Vector4(0.0f, 1.0f, 1.0f, 1.0f),
+	//		Vector3(GetCamera()->getDir().x * 40.0f, 30.0f, GetCamera()->getDir().z * 40.0f),
+	//		Vector3(0.0f, -20.0f, 0.0f),
+	//		0.99f);
+	//	particles_.push_back(myParticle_);
+	//}
+	//break;
+	//case 'N': // FIREBALL
+	//{
+	//	myParticle_ = new Particle(CreateShape(PxSphereGeometry(0.8)),
+	//		1.0f,
+	//		Vector4(1.0f, 0.0f, 0.0f, 1.0f),
+	//		Vector3(GetCamera()->getDir().x * 10.0f, 0.0f, GetCamera()->getDir().z * 10.0f),
+	//		Vector3(0.0f, 0.6f, 0.0f),
+	//		0.9f);
+	//	particles_.push_back(myParticle_);
+	//}
+	//break;
+	//case 'M': // LASER
+	//{
+	//	myParticle_ = new Particle(CreateShape(PxSphereGeometry(0.2)),
+	//		0.1f,
+	//		Vector4(0.0f, 0.0f, 1.0f, 1.0f),
+	//		Vector3(GetCamera()->getDir().x * 100.0f, 0.0f, GetCamera()->getDir().z * 100.0f),
+	//		Vector3(0.0f, 0.0f, 0.0f),
+	//		0.99f);
+	//	particles_.push_back(myParticle_);
+	//}
+	//break;
+#pragma endregion
+	case 'U': 
 	{
-		myParticle_ = new Particle(CreateShape(PxSphereGeometry(0.4)), // Shape
-			2.0f, // Mass
-			Vector4(1.0f, 0.4f, 0.2f, 1.0f), // Color
-			Vector3(GetCamera()->getDir().x * 35.0f, 0.0f, GetCamera()->getDir().z * 35.0f), // Vel  // CAMBIAR A SOLO UN GetCamera()->getDir() * 35
-			Vector3(0.0f, -1.0f, 0.0f), // Accel
-			0.9f); // Damping
-		particles_.push_back(myParticle_);
-	}
-	break;
-	case 'B': // ARTILLERY
-	{
-		myParticle_ = new Particle(CreateShape(PxSphereGeometry(1.7)),
-			200.0f,
-			Vector4(0.0f, 1.0f, 1.0f, 1.0f),
-			Vector3(GetCamera()->getDir().x * 40.0f, 30.0f, GetCamera()->getDir().z * 40.0f),
-			Vector3(0.0f, -20.0f, 0.0f),
-			0.99f);
-		particles_.push_back(myParticle_);
-	}
-	break;
-	case 'N': // FIREBALL
-	{
-		myParticle_ = new Particle(CreateShape(PxSphereGeometry(0.8)),
-			1.0f,
-			Vector4(1.0f, 0.0f, 0.0f, 1.0f),
-			Vector3(GetCamera()->getDir().x * 10.0f, 0.0f, GetCamera()->getDir().z * 10.0f),
-			Vector3(0.0f, 0.6f, 0.0f),
-			0.9f);
-		particles_.push_back(myParticle_);
-	}
-	break;
-	case 'M': // LASER
-	{
-		myParticle_ = new Particle(CreateShape(PxSphereGeometry(0.2)),
-			0.1f,
-			Vector4(0.0f, 0.0f, 1.0f, 1.0f),
-			Vector3(GetCamera()->getDir().x * 100.0f, 0.0f, GetCamera()->getDir().z * 100.0f),
-			Vector3(0.0f, 0.0f, 0.0f),
-			0.99f);
-		particles_.push_back(myParticle_);
+		particleSystem_->generateFirework(F);
 	}
 	break;
 	default:

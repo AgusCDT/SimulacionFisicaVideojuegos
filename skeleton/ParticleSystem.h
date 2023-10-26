@@ -3,23 +3,31 @@
 
 #include <list>
 #include "Particle.h"
-#include "ParticleGenerator.h"
+#include "UniformParticleGenerator.h"
+#include "GaussianParticleGenerator.h"
 
 class ParticleSystem
 {
-private:
+protected:
 	list<Particle*> particles_;
 	list<ParticleGenerator*> particleGenerator_;
+	ParticleGenerator* firework_generator_; // This generator is only to shoot the firework!!
+	Vector3 gravity_;
+	/*vector<Firework*> _firework_pool;*/ // Fireworks to be used as models!
 
+	Particle* p_ = nullptr;
 public:
+	ParticleSystem(const Vector3& g = { 0.0f, -9.8f, 0.0f});
+	virtual ~ParticleSystem() {};
+
 	void update(double t);
-	/*ParticleGenerator* getParticleGenerator(string name) {
-		return particleGenerator_;
-	}*/
 
-	void generateFireworkSystem() {}
+	// Method to generate a Firework with the appropiate type
+	void generateFirework(ParticleType firework_type);
 
-	// Metodo para eliminar partículas: si su tiempo de vida se acaba o se va fuera de la pantalla
+	ParticleGenerator* getParticleGenerator(const string& n) { return nullptr; } // Gets a particle generator with name...
+
+	void onParticleDeath(Particle* p); // Metodo para eliminar partículas
 
 };
 

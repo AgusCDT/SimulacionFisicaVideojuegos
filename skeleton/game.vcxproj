@@ -255,6 +255,7 @@
   <ItemGroup>
     <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="Diana.cpp" />
+    <ClCompile Include="GaussianParticleGenerator.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleGenerator.cpp" />
@@ -263,11 +264,13 @@
     <ClCompile Include="Render\Camera.cpp" />
     <ClCompile Include="Render\Render.cpp" />
     <ClCompile Include="Suelo.cpp" />
+    <ClCompile Include="UniformParticleGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="core.hpp" />
     <ClInclude Include="Diana.h" />
+    <ClInclude Include="GaussianParticleGenerator.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticleGenerator.h" />
     <ClInclude Include="ParticleSystem.h" />
@@ -276,6 +279,7 @@
     <ClInclude Include="Render\Render.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Suelo.h" />
+    <ClInclude Include="UniformParticleGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc" />
