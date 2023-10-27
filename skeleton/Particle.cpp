@@ -1,6 +1,6 @@
 #include "Particle.h"
 
-Particle::Particle(ParticleType type, PxShape* shape, float mass, Vector4 color, Vector3 pos, Vector3 vel, Vector3 accel, float damping, double lifeTime) {
+Particle::Particle(int type, PxShape* shape, float mass, Vector4 color, Vector3 pos, Vector3 vel, Vector3 accel, float damping, double lifeTime) {
 	type_ = type;
 	vel_ = vel;
 	accel_ = accel;
@@ -13,7 +13,7 @@ Particle::Particle(ParticleType type, PxShape* shape, float mass, Vector4 color,
 	renderItem_ = new RenderItem(shape, &tr_, color);
 }
 
-Particle::~Particle() {}
+Particle::~Particle() { DeregisterRenderItem(renderItem_); }
 
 bool Particle::integrate(double t) {
 	timer_ += t;
