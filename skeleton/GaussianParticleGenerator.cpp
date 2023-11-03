@@ -89,7 +89,7 @@ list<Particle*> GaussianParticleGenerator::generateFireworkCircle() { // CIRCULO
 
 		float time = d_(mt_);
 
-		float a = 2.0f * (3.14159) * u_(mt_);
+		float a = 2.0f * (3.14159) * d_(mt_);
 		float x = 30.0f * cos(a);
 		float y = 30.0f * sin(a);
 		Vector3 pos = meanPos_ + Vector3(x, y, 0);

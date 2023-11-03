@@ -18,14 +18,19 @@ Particle::~Particle() { DeregisterRenderItem(renderItem_); }
 bool Particle::integrate(double t) {
 	timer_ += t;
 
-	// Trivial case, infinite mass --> do nothing
-	/*if (inverse_mass_ <= 0.0f) return;*/
-	// Update position
-	tr_.p += vel_ * t;
+	// Get the accel considering the force accum
+	Vector3 resulting_accel_ = force_accum_ * inverse_mass_; // añadir accel
+	vel_ += resulting_accel_ * t;
+	
 	// Update linear velocity
-	vel_ += accel_ * t;
+	//vel_ += accel_ * t;
 	// Impose drag (damping)
 	vel_ *= powf(damping_, t);
+	// Update position
+	tr_.p += vel_ * t;
+
+	// Clear accum
+	clearForce();
 
 	if (timer_ >= lifeTime_) {
 		return true;

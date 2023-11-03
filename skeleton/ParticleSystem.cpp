@@ -8,6 +8,7 @@ ParticleSystem::ParticleSystem(const Vector3& g)
 
 void ParticleSystem::update(double t)
 {
+	// RECORRER LISTA DE GENERADORES DE FUERZA
 	list<Particle*>::iterator it = particles_.begin();
 	while (it != particles_.end()) {
 		auto aux = it;

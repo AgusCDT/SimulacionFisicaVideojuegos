@@ -214,7 +214,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 			2.0f, // Mass		
 			Vector4(0.0f, 1.0f, 1.0f, 1.0f), // Color
 			GetCamera()->getEye() + Vector3(-90, 0, -90),
-			Vector3(0, 1, 0) * 40, // Vel  
+			Vector3(0, 1, 0) * 10, // Vel  
 			Vector3(0.0f, -10.0f, 0.0f), // Accel
 			0.9f,
 			3.5f);
