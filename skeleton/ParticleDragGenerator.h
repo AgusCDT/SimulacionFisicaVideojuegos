@@ -10,7 +10,7 @@ protected:
 	float k1_; // Coef for velocity
 	float k2_; // Coef for square velocity
 public:
-	ParticleDragGenerator();
+	ParticleDragGenerator() {}
 	ParticleDragGenerator(const float k1, const float k2);
 	virtual void updateForce(Particle* p, double t);
 	inline void setDrag(float k1, float k2) { k1_ = k1; k2_ = k2; }

@@ -1,5 +1,11 @@
 #include "ParticleDragGenerator.h"
 
+ParticleDragGenerator::ParticleDragGenerator(const float k1, const float k2)
+{
+	k1_ = k1;
+	k2_ = k2;
+}
+
 void ParticleDragGenerator::updateForce(Particle* p, double t)
 {
 	//Check that the particle has Finite Mass

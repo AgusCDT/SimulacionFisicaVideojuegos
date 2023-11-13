@@ -10,6 +10,7 @@ Particle::Particle(int type, PxShape* shape, float mass, Vector4 color, Vector3 
 	tr_.q = { 0, 0, 0, 0 };
 	lifeTime_ = lifeTime;
 
+	force_accum_ = { 0, 0, 0 };
 	renderItem_ = new RenderItem(shape, &tr_, color);
 }
 
@@ -18,7 +19,7 @@ Particle::~Particle() { DeregisterRenderItem(renderItem_); }
 bool Particle::integrate(double t) {
 	timer_ += t;
 
-	// Get the accel considering the force accum
+	//// Get the accel considering the force accum
 	Vector3 resulting_accel_ = force_accum_ * inverse_mass_; // añadir accel
 	vel_ += resulting_accel_ * t;
 	

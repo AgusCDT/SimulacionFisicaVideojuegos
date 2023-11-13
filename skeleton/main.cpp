@@ -47,6 +47,8 @@ Suelo* suelo_ = nullptr;
 
 ParticleSystem* particleSystem_ = nullptr;
 
+ParticleForceRegistry* pForceRegistry_ = nullptr;
+
 
 
 // Initialize physics engine
@@ -79,7 +81,8 @@ void initPhysics(bool interactive)
 	/*diana_ = new Diana(10, 10, 10, Vector4(0.0f, 0.0f, 0.0f, 1.0f));*/
 #pragma endregion
 
-	particleSystem_ = new ParticleSystem(Vector3{ 0.0f, -10.0f, 0.0f });
+	pForceRegistry_ = new ParticleForceRegistry();
+	particleSystem_ = new ParticleSystem(pForceRegistry_);
 }
 
 
@@ -103,6 +106,9 @@ void stepPhysics(bool interactive, double t)
 	if (particleSystem_ != nullptr) {
 		particleSystem_->update(t);
 	}
+	/*if (pForceRegistry_ != nullptr) {
+		pForceRegistry_->updateForces(t);
+	}*/
 }
 
 // Function to clean data
@@ -127,7 +133,7 @@ void cleanupPhysics(bool interactive)
 	}*/
 #pragma endregion
 	delete particleSystem_;
-
+	delete pForceRegistry_;
 	gFoundation->release();
 }
 
@@ -184,9 +190,71 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		//}
 		//break;
 #pragma endregion
-	case 'U': // FUEGO ARTIFICIAL
+#pragma region P2
+	//case 'U': // FUEGO ARTIFICIAL
+	//{
+	//	particleSystem_->generateFirework(2, CreateShape(PxSphereGeometry(2.0f)),
+	//		2.0f, // Mass
+	//		Vector4(1.0f, 0.0f, 0.0f, 1.0f), // Color
+	//		GetCamera()->getEye() + Vector3(-90, 0, -90),
+	//		Vector3(0, 1, 0) * 60, // Vel  
+	//		Vector3(0.0f, -10.0f, 0.0f), // Accel
+	//		0.9f,
+	//		4.0f);
+	//}
+	//break;
+	//case 'I': // SNOWY
+	//{
+	//	particleSystem_->generateFirework(4, CreateShape(PxSphereGeometry(2.0f)),
+	//		2.0f, // Mass
+	//		Vector4(1.0f, 1.0f, 1.0f, 0.5f), // Color
+	//		GetCamera()->getEye() + Vector3(-90, 0, -90),
+	//		Vector3(0, 1, 0) * 40, // Vel  
+	//		Vector3(0.0f, -10.0f, 0.0f), // Accel
+	//		0.9f,
+	//		4.0f);
+	//}
+	//break;
+	//case 'O': // CIRCULO
+	//{
+	//	particleSystem_->generateFirework(3, CreateShape(PxSphereGeometry(2.0f)),
+	//		2.0f, // Mass		
+	//		Vector4(0.0f, 1.0f, 1.0f, 1.0f), // Color
+	//		GetCamera()->getEye() + Vector3(-90, 0, -90),
+	//		Vector3(0, 1, 0) * 10, // Vel  
+	//		Vector3(0.0f, -10.0f, 0.0f), // Accel
+	//		0.9f,
+	//		3.5f);
+	//}
+	//break;
+	//case 'P': // LLUVIA
+	//{
+	//	particleSystem_->generateFirework(5, CreateShape(PxSphereGeometry(2.0f)),
+	//		2.0f, // Mass
+	//		Vector4(0.0f, 0.0f, 1.0f, 1.0f), // Color
+	//		GetCamera()->getEye() + Vector3(-90, 0, -90),
+	//		Vector3(0, 1, 0) * 40, // Vel  
+	//		Vector3(0.0f, -10.0f, 0.0f), // Accel
+	//		0.9f,
+	//		3.5f);
+	//}
+	//break;
+	//default:
+	//	particleSystem_->generateFirework(1, CreateShape(PxSphereGeometry(2.0f)),
+	//		2.0f, // Mass
+	//		Vector4(0.0f, 0.0f, 1.0f, 1.0f), // Color
+	//		GetCamera()->getEye() + Vector3(-90, 0, -90),
+	//		Vector3(0, 1, 0) * 40, // Vel  
+	//		Vector3(0.0f, -10.0f, 0.0f), // Accel
+	//		0.9f,
+	//		3.5f);
+	//	break;
+	//}
+#pragma endregion
+
+	case 'H':
 	{
-		particleSystem_->generateFirework(2, CreateShape(PxSphereGeometry(2.0f)),
+		particleSystem_->generateForcedParticle(2, CreateShape(PxSphereGeometry(2.0f)),
 			2.0f, // Mass
 			Vector4(1.0f, 0.0f, 0.0f, 1.0f), // Color
 			GetCamera()->getEye() + Vector3(-90, 0, -90),
@@ -196,52 +264,30 @@ void keyPress(unsigned char key, const PxTransform& camera)
 			4.0f);
 	}
 	break;
-	case 'I': // SNOWY
+	case 'J':
 	{
-		particleSystem_->generateFirework(4, CreateShape(PxSphereGeometry(2.0f)),
-			2.0f, // Mass
-			Vector4(1.0f, 1.0f, 1.0f, 0.5f), // Color
+		particleSystem_->generateForcedParticle(2, CreateShape(PxSphereGeometry(2.0f)),
+			200.0f, // Mass
+			Vector4(0.0f, 1.0f, 0.0f, 1.0f), // Color
 			GetCamera()->getEye() + Vector3(-90, 0, -90),
-			Vector3(0, 1, 0) * 40, // Vel  
+			Vector3(0, 1, 0) * 60, // Vel  
+			Vector3(0.0f, -10.0f, 0.0f), // Accel
+			0.9f,
+			20.0f);
+	}
+	break;
+	case 'K':
+	{
+		particleSystem_->generateForcedParticle(5, CreateShape(PxSphereGeometry(2.0f)),
+			2.0f, // Mass
+			Vector4(0.0f, 0.0f, 1.0f, 1.0f), // Color
+			GetCamera()->getEye() + Vector3(-90, 0, -90),
+			Vector3(0, 1, 0) * 60, // Vel  
 			Vector3(0.0f, -10.0f, 0.0f), // Accel
 			0.9f,
 			4.0f);
 	}
 	break;
-	case 'O': // CIRCULO
-	{
-		particleSystem_->generateFirework(3, CreateShape(PxSphereGeometry(2.0f)),
-			2.0f, // Mass		
-			Vector4(0.0f, 1.0f, 1.0f, 1.0f), // Color
-			GetCamera()->getEye() + Vector3(-90, 0, -90),
-			Vector3(0, 1, 0) * 10, // Vel  
-			Vector3(0.0f, -10.0f, 0.0f), // Accel
-			0.9f,
-			3.5f);
-	}
-	break;
-	case 'P': // LLUVIA
-	{
-		particleSystem_->generateFirework(5, CreateShape(PxSphereGeometry(2.0f)),
-			2.0f, // Mass
-			Vector4(0.0f, 0.0f, 1.0f, 1.0f), // Color
-			GetCamera()->getEye() + Vector3(-90, 0, -90),
-			Vector3(0, 1, 0) * 40, // Vel  
-			Vector3(0.0f, -10.0f, 0.0f), // Accel
-			0.9f,
-			3.5f);
-	}
-	break;
-	default:
-		particleSystem_->generateFirework(1, CreateShape(PxSphereGeometry(2.0f)),
-			2.0f, // Mass
-			Vector4(0.0f, 0.0f, 1.0f, 1.0f), // Color
-			GetCamera()->getEye() + Vector3(-90, 0, -90),
-			Vector3(0, 1, 0) * 40, // Vel  
-			Vector3(0.0f, -10.0f, 0.0f), // Accel
-			0.9f,
-			3.5f);
-		break;
 	}
 }
 

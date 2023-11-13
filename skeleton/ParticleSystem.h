@@ -5,6 +5,10 @@
 #include "UniformParticleGenerator.h"
 #include "GaussianParticleGenerator.h"
 
+#include "ParticleDragGenerator.h"
+#include "GravityForceGenerator.h"
+#include "ParticleForceRegistry.h"
+
 class ParticleSystem
 {
 protected:
@@ -13,8 +17,14 @@ protected:
 	ParticleGenerator* firework_generator_; // This generator is only to shoot the firework!!
 	Vector3 gravity_;
 	Firework* p_ = nullptr;
+	Particle* part_ = nullptr; 
+
+	ParticleForceRegistry* pForceRegistry_;
+	list<ForceGenerator*> forceGenerators_;
+	ParticleDragGenerator* pDragGen_;
+	GravityForceGenerator* gForceGen_;
 public:
-	ParticleSystem(const Vector3& g = { 0.0f, -10.0f, 0.0f });
+	ParticleSystem(ParticleForceRegistry* pForceRegistry/*const Vector3& g = { 0.0f, -10.0f, 0.0f }*/);
 	virtual ~ParticleSystem() {};
 
 	void update(double t);
@@ -22,11 +32,13 @@ public:
 	// Method to generate a Firework with the appropiate type
 	void generateFirework(int type, PxShape* shape, float mass, Vector4 color, Vector3 pos, Vector3 vel, Vector3 accel, float damping, double lifeTime);
 
+	void generateForcedParticle(int type, PxShape* shape, float mass, Vector4 color, Vector3 pos, Vector3 vel, Vector3 accel, float damping, double lifeTime);
+
 	ParticleGenerator* getParticleGenerator(const string& n) { return nullptr; } // Gets a particle generator with name...
 
 	void onParticleDeath(Particle* p); // Metodo para eliminar partículas
 
-	void createGenerators(); // Creacíon de genaradores
+	void createGenerators(); // Creacíon de generadores
 
 };
 

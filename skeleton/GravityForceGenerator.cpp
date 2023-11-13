@@ -1,5 +1,10 @@
 #include "GravityForceGenerator.h"
 
+GravityForceGenerator::GravityForceGenerator(const Vector3& g)
+{
+	gravity_ = g;
+}
+
 void GravityForceGenerator::updateForce(Particle* p, double t)
 {
 	// Check that the particle has Finite MAss
