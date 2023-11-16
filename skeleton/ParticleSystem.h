@@ -8,6 +8,7 @@
 #include "ParticleDragGenerator.h"
 #include "GravityForceGenerator.h"
 #include "ParticleForceRegistry.h"
+#include "WindForceGenerator.h"
 
 class ParticleSystem
 {
@@ -21,10 +22,11 @@ protected:
 
 	ParticleForceRegistry* pForceRegistry_;
 	list<ForceGenerator*> forceGenerators_;
-	ParticleDragGenerator* pDragGen_;
-	GravityForceGenerator* gForceGen_;
+	GravityForceGenerator* gForceGen1_;
+	GravityForceGenerator* gForceGen2_;
+	WindForceGenerator* wForceGen_;
 public:
-	ParticleSystem(ParticleForceRegistry* pForceRegistry/*const Vector3& g = { 0.0f, -10.0f, 0.0f }*/);
+	ParticleSystem();
 	virtual ~ParticleSystem() {};
 
 	void update(double t);

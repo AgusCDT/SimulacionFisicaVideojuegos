@@ -1,11 +1,9 @@
 #include "ParticleSystem.h"
 
-ParticleSystem::ParticleSystem(ParticleForceRegistry* pForceRegistry/*const Vector3& g*/)
+ParticleSystem::ParticleSystem()
 {
-	/*gravity_ = g;*/
-	pForceRegistry_ = pForceRegistry;
+	pForceRegistry_ = new ParticleForceRegistry();
 	createGenerators();
-	
 }
 
 void ParticleSystem::update(double t)
@@ -21,23 +19,14 @@ void ParticleSystem::update(double t)
 		itF = aux;
 	}*/
 
-
+	pForceRegistry_->updateForces(t);
 	list<Particle*>::iterator it = particles_.begin();
 	while (it != particles_.end()) {
 		auto aux = it;
 		++aux;
-		if ((*it)->getType() == 2) {
-			(*it)->addForce({0, 20, 0 });
-		}
-		else if ((*it)->getType() == 5) {
-			(*it)->addForce({ 0, 20, 0 });
-		}
-		cout << to_string((*it)->getVel().y) << endl;
 		if ((*it)->integrate(t)) {
-			pForceRegistry_->deleteParticleRegistry((*it));
 			onParticleDeath(*it);
-		}
-		
+		}		
 		/*if ((*it)->integrate(t)) {
 			// P2
 			if ((*it)->getType() >= 1) {
@@ -75,7 +64,7 @@ void ParticleSystem::generateFirework(int type, PxShape* shape, float mass, Vect
 
 void ParticleSystem::generateForcedParticle(int type, PxShape* shape, float mass, Vector4 color, Vector3 pos, Vector3 vel, Vector3 accel, float damping, double lifeTime)
 {
-	part_ = new Firework(type, shape,
+	part_ = new Particle(type, shape,
 		mass, // Mass
 		color, // Color
 		pos, // Pos
@@ -84,11 +73,19 @@ void ParticleSystem::generateForcedParticle(int type, PxShape* shape, float mass
 		damping,
 		lifeTime);
 	particles_.push_back(part_);
-	if (type != 5) {
-		pForceRegistry_->addRegistry(gForceGen_, part_);
-	}
-	else {
-		pForceRegistry_->addRegistry(pDragGen_, part_);
+	switch (type) {
+	case 1:
+		pForceRegistry_->addRegistry(gForceGen1_, part_);
+		break;
+	case 2:
+		gForceGen2_->setGravity(Vector3(0.0f, -17.0f, 0.0f));
+		pForceRegistry_->addRegistry(gForceGen2_, part_);
+		break;
+	case 3:
+		pForceRegistry_->addRegistry(wForceGen_, part_);
+		break;
+	default:
+		break;
 	}
 }
 
@@ -107,9 +104,10 @@ void ParticleSystem::createGenerators()
 	particleGenerator_.push_back(firework_generator_);*/
 
 	// P3
-	pDragGen_ = new ParticleDragGenerator(2, 5);
-	forceGenerators_.push_back(pDragGen_);
-	gForceGen_ = new GravityForceGenerator({ 0, -20.0f, 0 });
-	/*gForceGen_->setGravity({ 0, -10.0f, 0 });*/
-	forceGenerators_.push_back(gForceGen_);
+	gForceGen1_ = new GravityForceGenerator({ 0, -9.8f, 0 });
+	forceGenerators_.push_back(gForceGen1_);
+	gForceGen2_ = new GravityForceGenerator({ 0, -9.8f, 0 });
+	forceGenerators_.push_back(gForceGen2_);
+	wForceGen_ = new WindForceGenerator(10.0f, 1.0f, Vector3(0.0f, 0.0f, 5.0f), Vector3(0.0f, 0.0f, 0.0f), Vector3(50.0f, 100.0f, 50.0f));
+	forceGenerators_.push_back(wForceGen_);
 }

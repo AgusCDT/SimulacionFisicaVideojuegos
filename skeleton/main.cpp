@@ -47,10 +47,6 @@ Suelo* suelo_ = nullptr;
 
 ParticleSystem* particleSystem_ = nullptr;
 
-ParticleForceRegistry* pForceRegistry_ = nullptr;
-
-
-
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
@@ -76,13 +72,11 @@ void initPhysics(bool interactive)
 	gScene = gPhysics->createScene(sceneDesc);
 
 #pragma region P1
-	suelo_ = new Suelo(160, 20, 160, Vector4(0.0f, 0.0f, 0.0f, 1.0f)); // "Suelo"
+	suelo_ = new Suelo(240, 10, 240, Vector4(0.0f, 0.0f, 0.0f, 1.0f)); // "Suelo"
 
 	/*diana_ = new Diana(10, 10, 10, Vector4(0.0f, 0.0f, 0.0f, 1.0f));*/
 #pragma endregion
-
-	pForceRegistry_ = new ParticleForceRegistry();
-	particleSystem_ = new ParticleSystem(pForceRegistry_);
+	particleSystem_ = new ParticleSystem();
 }
 
 
@@ -106,9 +100,6 @@ void stepPhysics(bool interactive, double t)
 	if (particleSystem_ != nullptr) {
 		particleSystem_->update(t);
 	}
-	/*if (pForceRegistry_ != nullptr) {
-		pForceRegistry_->updateForces(t);
-	}*/
 }
 
 // Function to clean data
@@ -133,7 +124,6 @@ void cleanupPhysics(bool interactive)
 	}*/
 #pragma endregion
 	delete particleSystem_;
-	delete pForceRegistry_;
 	gFoundation->release();
 }
 
@@ -252,42 +242,77 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	//}
 #pragma endregion
 
-	case 'H':
+	case 'H':// ACTIVIDAD 1, 3 partículas
 	{
-		particleSystem_->generateForcedParticle(2, CreateShape(PxSphereGeometry(2.0f)),
+		// GRAVEDAD NORMAL
+		particleSystem_->generateForcedParticle(1, CreateShape(PxSphereGeometry(2.0f)),
 			2.0f, // Mass
 			Vector4(1.0f, 0.0f, 0.0f, 1.0f), // Color
-			GetCamera()->getEye() + Vector3(-90, 0, -90),
-			Vector3(0, 1, 0) * 60, // Vel  
-			Vector3(0.0f, -10.0f, 0.0f), // Accel
+			Vector3(0.0f, 250.0f, 0.0f),
+			Vector3(0.0f, 0.0f, 0.0f), // Vel  
+			Vector3(0.0f, 0.0f, 0.0f), // Accel
 			0.9f,
-			4.0f);
+			8.0f);
+		// MAS GRAVEDAD
+		particleSystem_->generateForcedParticle(2, CreateShape(PxSphereGeometry(2.0f)),
+			2.0f, // Mass
+			Vector4(1.0f, 1.0f, 0.0f, 1.0f), // Color
+			Vector3(20.0f, 250.0f, -20.0f),
+			Vector3(0.0f, 0.0f, 0.0f), // Vel  
+			Vector3(0.0f, 0.0f, 0.0f), // Accel
+			0.9f,
+			8.0f);
+		// GRAVEDAD NORMAL Y DISTINTA MASA
+		particleSystem_->generateForcedParticle(1, CreateShape(PxSphereGeometry(2.0f)),
+			10.0f, // Mass
+			Vector4(0.5f, 0.5f, 0.0f, 1.0f), // Color
+			Vector3(40.0f, 250.0f, -40.0f),
+			Vector3(0.0f, 0.0f, 0.0f), // Vel  
+			Vector3(0.0f, 0.0f, 0.0f), // Accel
+			0.9f,
+			8.0f);
 	}
 	break;
-	case 'J':
+	case 'J': // ACTIVIDAD 2, VIENTO
 	{
-		particleSystem_->generateForcedParticle(2, CreateShape(PxSphereGeometry(2.0f)),
-			200.0f, // Mass
-			Vector4(0.0f, 1.0f, 0.0f, 1.0f), // Color
-			GetCamera()->getEye() + Vector3(-90, 0, -90),
-			Vector3(0, 1, 0) * 60, // Vel  
-			Vector3(0.0f, -10.0f, 0.0f), // Accel
+		particleSystem_->generateForcedParticle(3, CreateShape(PxSphereGeometry(2.0f)),
+			2.0f, // Mass
+			Vector4(0.0f, 0.0f, 1.0f, 1.0f), // Color
+			Vector3(0.0f, 30.0f, 0.0f),
+			Vector3(0.0f, 0.0f, 0.0f), // Vel  
+			Vector3(0.0f, 0.0f, 0.0f), // Accel
+			0.9f,
+			20.0f);
+		particleSystem_->generateForcedParticle(3, CreateShape(PxSphereGeometry(2.0f)),
+			20.0f, // Mass
+			Vector4(0.0f, 0.0f, 0.5f, 1.0f), // Color
+			Vector3(0.0f, 50.0f, 0.0f),
+			Vector3(0.0f, 0.0f, 0.0f), // Vel  
+			Vector3(0.0f, 0.0f, 0.0f), // Accel
+			0.9f,
+			20.0f);
+		particleSystem_->generateForcedParticle(3, CreateShape(PxSphereGeometry(2.0f)),
+			20.0f, // Mass
+			Vector4(0.0f, 0.3f, 1.0f, 1.0f), // Color
+			Vector3(0.0f, 70.0f, 0.0f),
+			Vector3(0.0f, 10.0f, 0.0f), // Vel  
+			Vector3(0.0f, 0.0f, 0.0f), // Accel
 			0.9f,
 			20.0f);
 	}
 	break;
-	case 'K':
-	{
-		particleSystem_->generateForcedParticle(5, CreateShape(PxSphereGeometry(2.0f)),
-			2.0f, // Mass
-			Vector4(0.0f, 0.0f, 1.0f, 1.0f), // Color
-			GetCamera()->getEye() + Vector3(-90, 0, -90),
-			Vector3(0, 1, 0) * 60, // Vel  
-			Vector3(0.0f, -10.0f, 0.0f), // Accel
-			0.9f,
-			4.0f);
-	}
-	break;
+	//case 'K':
+	//{
+	//	particleSystem_->generateForcedParticle(5, CreateShape(PxSphereGeometry(2.0f)),
+	//		2.0f, // Mass
+	//		Vector4(0.0f, 0.0f, 1.0f, 1.0f), // Color
+	//		GetCamera()->getEye() + Vector3(-90, 0, -90),
+	//		Vector3(0, 1, 0) * 60, // Vel  
+	//		Vector3(0.0f, -10.0f, 0.0f), // Accel
+	//		0.9f,
+	//		4.0f);
+	//}
+	//break;
 	}
 }
 

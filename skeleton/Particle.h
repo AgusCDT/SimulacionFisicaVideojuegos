@@ -30,6 +30,7 @@ public:
 	inline int getType() { return type_; }
 	inline Vector3 getVel() { return vel_; }
 	inline void setPos(Vector3 pos) { tr_.p = pos; }
+	inline Vector3 getPos() { return tr_.p; }
 	/*virtual Particle* clone() const;*/
 	double timer_ = 0;
 

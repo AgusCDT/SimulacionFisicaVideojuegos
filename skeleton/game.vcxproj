@@ -270,6 +270,7 @@
     <ClCompile Include="Render\Render.cpp" />
     <ClCompile Include="Suelo.cpp" />
     <ClCompile Include="UniformParticleGenerator.cpp" />
+    <ClCompile Include="WindForceGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="callbacks.hpp" />
@@ -290,6 +291,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="Suelo.h" />
     <ClInclude Include="UniformParticleGenerator.h" />
+    <ClInclude Include="WindForceGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc" />
