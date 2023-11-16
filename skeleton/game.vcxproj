@@ -255,6 +255,7 @@
   <ItemGroup>
     <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="Diana.cpp" />
+    <ClCompile Include="ExplosionForceGenerator.cpp" />
     <ClCompile Include="Firework.cpp" />
     <ClCompile Include="ForceGenerator.cpp" />
     <ClCompile Include="GaussianParticleGenerator.cpp" />
@@ -277,6 +278,7 @@
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="core.hpp" />
     <ClInclude Include="Diana.h" />
+    <ClInclude Include="ExplosionForceGenerator.h" />
     <ClInclude Include="Firework.h" />
     <ClInclude Include="ForceGenerator.h" />
     <ClInclude Include="GaussianParticleGenerator.h" />

@@ -87,6 +87,10 @@ void ParticleSystem::generateForcedParticle(int type, PxShape* shape, float mass
 	case 4: 
 		pForceRegistry_->addRegistry(whirlForceGen_, part_);
 		break;
+	/*case 5:
+		eForceGen_->
+		pForceRegistry_->addRegistry(eForceGen_, part_);
+		break;*/
 	default:
 		break;
 	}
@@ -115,4 +119,13 @@ void ParticleSystem::createGenerators()
 	forceGenerators_.push_back(wForceGen_);
 	whirlForceGen_ = new WhirlwindForceGenerator(1.0f, Vector3(20.0f, 0.0f, 20.0f), Vector3(200.0f, 100.0f, 200.0f));
 	forceGenerators_.push_back(whirlForceGen_);
+	eForceGen_ = new ExplosionForceGenerator(1000.0f, 100.0f, Vector3(0.0f, 30.0f, 0.0f), 343.0f, 50.0f);
+	forceGenerators_.push_back(eForceGen_);
+}
+
+void ParticleSystem::explosion()
+{
+	for (auto p : particles_) {
+		pForceRegistry_->addRegistry(eForceGen_, p);
+	}
 }

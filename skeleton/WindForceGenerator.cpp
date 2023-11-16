@@ -10,7 +10,9 @@ WindForceGenerator::WindForceGenerator(const float k1, const float k2, Vector3 w
 void WindForceGenerator::updateForce(Particle* p, double t)
 {
 	if (withinBox(p)) {
-		if (fabs(p->getInverseMass()) < 1e-10) return;
+		if (fabs(p->getInverseMass()) < 1e-10) { 
+			return; 
+		}
 
 		Vector3 v = p->getVel();
 		Vector3 diffVel = windVel_ - v; // Diferencia de velocidad

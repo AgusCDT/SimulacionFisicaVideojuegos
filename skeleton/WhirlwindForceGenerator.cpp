@@ -12,7 +12,9 @@ WhirlwindForceGenerator::WhirlwindForceGenerator(const float K, Vector3 origin, 
 void WhirlwindForceGenerator::updateForce(Particle* p, double t)
 {
 	if (withinBox(p)) {
-		if (fabs(p->getInverseMass()) < 1e-10) return;
+		if (fabs(p->getInverseMass()) < 1e-10) {
+			return;
+		}
 
 		Vector3 pos = p->getPos();
 		windVel_ = k1_ * Vector3((pos.z - origin_.z), 50 - (pos.y - origin_.y), -pos.x - origin_.x); // Vector torbellino(cambiando el signo de x y z gira hacia un lado o a otro)

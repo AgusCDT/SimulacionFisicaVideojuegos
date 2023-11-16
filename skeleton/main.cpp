@@ -313,6 +313,55 @@ void keyPress(unsigned char key, const PxTransform& camera)
 			20.0f);	
 	}
 	break;
+	case 'L': // ACTIVIDAD 4, EXPLOSION
+	{	
+		particleSystem_->generateForcedParticle(5, CreateShape(PxSphereGeometry(2.0f)),
+			1.0f, // Mass
+			Vector4(0.0f, 1.0f, 0.0f, 1.0f), // Color
+			Vector3(0.0f, 29.0f, 0.0f), // Pos
+			Vector3(0.0f, 0.0f, 0.0f), // Vel  
+			Vector3(0.0f, 0.0f, 0.0f), // Accel
+			0.9f,
+			20.0f);	
+		particleSystem_->generateForcedParticle(5, CreateShape(PxSphereGeometry(2.0f)),
+			2.0f, // Mass
+			Vector4(0.2f, 1.0f, 0.0f, 1.0f), // Color
+			Vector3(20.0f, 20.0f, 0.0f), // Pos
+			Vector3(0.0f, 0.0f, 0.0f), // Vel  
+			Vector3(0.0f, 0.0f, 0.0f), // Accel
+			0.9f,
+			20.0f);
+		particleSystem_->generateForcedParticle(5, CreateShape(PxSphereGeometry(2.0f)),
+			3.0f, // Mass
+			Vector4(0.4f, 1.0f, 0.0f, 1.0f), // Color
+			Vector3(0.0f, 30.0f, 30.0f), // Pos
+			Vector3(0.0f, 0.0f, 0.0f), // Vel  
+			Vector3(0.0f, 0.0f, 0.0f), // Accel
+			0.9f,
+			20.0f);
+		particleSystem_->generateForcedParticle(5, CreateShape(PxSphereGeometry(2.0f)),
+			4.0f, // Mass
+			Vector4(0.6f, 1.0f, 0.0f, 1.0f), // Color
+			Vector3(0.0f, 10.0f, 20.0f), // Pos
+			Vector3(0.0f, 0.0f, 0.0f), // Vel  
+			Vector3(0.0f, 0.0f, 0.0f), // Accel
+			0.9f,
+			20.0f);
+		particleSystem_->generateForcedParticle(5, CreateShape(PxSphereGeometry(2.0f)),
+			5.0f, // Mass
+			Vector4(0.8f, 1.0f, 0.0f, 1.0f), // Color
+			Vector3(15.0f, 50.0f, 0.0f), // Pos
+			Vector3(0.0f, 0.0f, 0.0f), // Vel  
+			Vector3(0.0f, 0.0f, 0.0f), // Accel
+			0.9f,
+			20.0f);
+	}
+	break;
+	case 'M': // ACTIVIDAD 4, EXPLOSION
+	{		
+		particleSystem_->explosion();
+	}
+	break;
 	}
 }
 

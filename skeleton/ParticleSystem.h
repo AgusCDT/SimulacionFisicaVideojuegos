@@ -9,6 +9,7 @@
 #include "GravityForceGenerator.h"
 #include "ParticleForceRegistry.h"
 #include "WhirlwindForceGenerator.h"
+#include "ExplosionForceGenerator.h"
 
 class ParticleSystem
 {
@@ -26,6 +27,7 @@ protected:
 	GravityForceGenerator* gForceGen2_;
 	WindForceGenerator* wForceGen_;
 	WhirlwindForceGenerator* whirlForceGen_;
+	ExplosionForceGenerator* eForceGen_;
 public:
 	ParticleSystem();
 	virtual ~ParticleSystem() {};
@@ -42,6 +44,8 @@ public:
 	void onParticleDeath(Particle* p); // Metodo para eliminar partículas
 
 	void createGenerators(); // Creacíon de generadores
+
+	void explosion(); // Añade el generador de explosion a las partículas
 
 };
 
