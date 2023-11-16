@@ -8,7 +8,7 @@
 #include "ParticleDragGenerator.h"
 #include "GravityForceGenerator.h"
 #include "ParticleForceRegistry.h"
-#include "WindForceGenerator.h"
+#include "WhirlwindForceGenerator.h"
 
 class ParticleSystem
 {
@@ -25,6 +25,7 @@ protected:
 	GravityForceGenerator* gForceGen1_;
 	GravityForceGenerator* gForceGen2_;
 	WindForceGenerator* wForceGen_;
+	WhirlwindForceGenerator* whirlForceGen_;
 public:
 	ParticleSystem();
 	virtual ~ParticleSystem() {};

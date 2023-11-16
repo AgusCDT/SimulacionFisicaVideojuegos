@@ -248,7 +248,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		particleSystem_->generateForcedParticle(1, CreateShape(PxSphereGeometry(2.0f)),
 			2.0f, // Mass
 			Vector4(1.0f, 0.0f, 0.0f, 1.0f), // Color
-			Vector3(0.0f, 250.0f, 0.0f),
+			Vector3(0.0f, 250.0f, 0.0f), // Pos
 			Vector3(0.0f, 0.0f, 0.0f), // Vel  
 			Vector3(0.0f, 0.0f, 0.0f), // Accel
 			0.9f,
@@ -257,7 +257,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		particleSystem_->generateForcedParticle(2, CreateShape(PxSphereGeometry(2.0f)),
 			2.0f, // Mass
 			Vector4(1.0f, 1.0f, 0.0f, 1.0f), // Color
-			Vector3(20.0f, 250.0f, -20.0f),
+			Vector3(20.0f, 250.0f, -20.0f), // Pos
 			Vector3(0.0f, 0.0f, 0.0f), // Vel  
 			Vector3(0.0f, 0.0f, 0.0f), // Accel
 			0.9f,
@@ -266,7 +266,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		particleSystem_->generateForcedParticle(1, CreateShape(PxSphereGeometry(2.0f)),
 			10.0f, // Mass
 			Vector4(0.5f, 0.5f, 0.0f, 1.0f), // Color
-			Vector3(40.0f, 250.0f, -40.0f),
+			Vector3(40.0f, 250.0f, -40.0f), // Pos
 			Vector3(0.0f, 0.0f, 0.0f), // Vel  
 			Vector3(0.0f, 0.0f, 0.0f), // Accel
 			0.9f,
@@ -278,7 +278,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		particleSystem_->generateForcedParticle(3, CreateShape(PxSphereGeometry(2.0f)),
 			2.0f, // Mass
 			Vector4(0.0f, 0.0f, 1.0f, 1.0f), // Color
-			Vector3(0.0f, 30.0f, 0.0f),
+			Vector3(0.0f, 30.0f, 0.0f), // Pos
 			Vector3(0.0f, 0.0f, 0.0f), // Vel  
 			Vector3(0.0f, 0.0f, 0.0f), // Accel
 			0.9f,
@@ -286,7 +286,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		particleSystem_->generateForcedParticle(3, CreateShape(PxSphereGeometry(2.0f)),
 			20.0f, // Mass
 			Vector4(0.0f, 0.0f, 0.5f, 1.0f), // Color
-			Vector3(0.0f, 50.0f, 0.0f),
+			Vector3(0.0f, 50.0f, 0.0f), // Pos
 			Vector3(0.0f, 0.0f, 0.0f), // Vel  
 			Vector3(0.0f, 0.0f, 0.0f), // Accel
 			0.9f,
@@ -294,25 +294,25 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		particleSystem_->generateForcedParticle(3, CreateShape(PxSphereGeometry(2.0f)),
 			20.0f, // Mass
 			Vector4(0.0f, 0.3f, 1.0f, 1.0f), // Color
-			Vector3(0.0f, 70.0f, 0.0f),
+			Vector3(0.0f, 70.0f, 0.0f), // Pos
 			Vector3(0.0f, 10.0f, 0.0f), // Vel  
 			Vector3(0.0f, 0.0f, 0.0f), // Accel
 			0.9f,
 			20.0f);
 	}
 	break;
-	//case 'K':
-	//{
-	//	particleSystem_->generateForcedParticle(5, CreateShape(PxSphereGeometry(2.0f)),
-	//		2.0f, // Mass
-	//		Vector4(0.0f, 0.0f, 1.0f, 1.0f), // Color
-	//		GetCamera()->getEye() + Vector3(-90, 0, -90),
-	//		Vector3(0, 1, 0) * 60, // Vel  
-	//		Vector3(0.0f, -10.0f, 0.0f), // Accel
-	//		0.9f,
-	//		4.0f);
-	//}
-	//break;
+	case 'K': // ACTIVIDAD 3, TORBELLINO
+	{
+		particleSystem_->generateForcedParticle(4, CreateShape(PxSphereGeometry(2.0f)),
+			0.5f, // Mass
+			Vector4(0.0f, 1.0f, 0.0f, 1.0f), // Color
+			Vector3(0.0f, 0.0f, 0.0f), // Pos
+			Vector3(0.0f, 0.0f, 0.0f), // Vel  
+			Vector3(0.0f, 0.0f, 0.0f), // Accel
+			0.9f,
+			20.0f);	
+	}
+	break;
 	}
 }
 

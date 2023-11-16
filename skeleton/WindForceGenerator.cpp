@@ -27,7 +27,9 @@ bool WindForceGenerator::withinBox(Particle* p)
 	if ((pos.x >= origin_.x && pos.x <= origin_.x + size_.x) &&
 		(pos.y >= origin_.y && pos.y <= origin_.y + size_.y) &&
 		(pos.z >= origin_.z && pos.z <= origin_.z + size_.z)) {
-
+		cout << pos.x << endl;
+		cout << pos.y << endl;
+		cout << pos.z << endl;
 		return true;
 	}
 	else {

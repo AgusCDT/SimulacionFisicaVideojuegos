@@ -12,7 +12,7 @@ public:
 	WindForceGenerator(const float k1, const float k2, Vector3 windVel, Vector3 origin, Vector3 size);
 	virtual void updateForce(Particle* p, double t) override;
 
-	bool withinBox(Particle* p); // Comprueba si la particula esta dentro del rango de accion del viento
+	virtual bool withinBox(Particle* p); // Comprueba si la particula esta dentro del rango de accion del viento
 };
 #endif // !WIND_FORCE_GENERATOR_H_
 
