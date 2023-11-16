@@ -2,11 +2,7 @@
 
 WhirlwindForceGenerator::WhirlwindForceGenerator(const float K, Vector3 origin, Vector3 size) : WindForceGenerator(K, 0, {0,0,0}, origin, size)
 {
-	tr_.p = Vector3(origin.x, origin.y, origin.z);
-	tr_.q = { 0, 0, 0, 0 };
-	cube_ = CreateShape(PxBoxGeometry(size.x, size.y, size.z));
-
-	/*renderItem_ = new RenderItem(cube_, &tr_, Vector4(1.0f, 1.0f, 0.0f, 0.5f));*/
+	
 }
 
 void WhirlwindForceGenerator::updateForce(Particle* p, double t)

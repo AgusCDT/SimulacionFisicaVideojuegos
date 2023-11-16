@@ -8,37 +8,15 @@ ParticleSystem::ParticleSystem()
 
 void ParticleSystem::update(double t)
 {
-	// RECORRER LISTA DE GENERADORES DE FUERZA
-	/*list<ForceGenerator*>::iterator itF = forceGenerators_.begin();
-	while (itF != forceGenerators_.end()) {
-		auto aux = itF;
-		++aux;
-		if ((*itF)->updateTime(t)) {
-			pForceRegistry_->deleteForceRegistry((*itF));
-		}
-		itF = aux;
-	}*/
-
 	pForceRegistry_->updateForces(t);
+
 	list<Particle*>::iterator it = particles_.begin();
 	while (it != particles_.end()) {
 		auto aux = it;
 		++aux;
 		if ((*it)->integrate(t)) {
 			onParticleDeath(*it);
-		}		
-		/*if ((*it)->integrate(t)) {
-			// P2
-			if ((*it)->getType() >= 1) {
-				Firework* firework = static_cast<Firework*>(*it);
-				list<Particle*> p = firework->explode();
-				for (auto d : p) {
-					particles_.push_back(d);
-				}
-			}		
-			onParticleDeath(*it);
-		}*/
-		
+		}			
 		it = aux;
 	}
 }
@@ -78,7 +56,7 @@ void ParticleSystem::generateForcedParticle(int type, PxShape* shape, float mass
 		pForceRegistry_->addRegistry(gForceGen1_, part_);
 		break;
 	case 2:
-		gForceGen2_->setGravity(Vector3(0.0f, -17.0f, 0.0f));
+		gForceGen2_->setGravity(Vector3(0.0f, -17.0f, 0.0f)); 
 		pForceRegistry_->addRegistry(gForceGen2_, part_);
 		break;
 	case 3:
@@ -87,10 +65,6 @@ void ParticleSystem::generateForcedParticle(int type, PxShape* shape, float mass
 	case 4: 
 		pForceRegistry_->addRegistry(whirlForceGen_, part_);
 		break;
-	/*case 5:
-		eForceGen_->
-		pForceRegistry_->addRegistry(eForceGen_, part_);
-		break;*/
 	default:
 		break;
 	}
@@ -98,6 +72,7 @@ void ParticleSystem::generateForcedParticle(int type, PxShape* shape, float mass
 
 void ParticleSystem::onParticleDeath(Particle* p)
 {
+	pForceRegistry_->deleteParticleRegistry(p);
 	particles_.remove(p);
 	delete p;
 }

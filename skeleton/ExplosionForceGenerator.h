@@ -1,4 +1,6 @@
-#pragma once
+#ifndef EXPLOSION_FORCE_GENERATOR_H_
+#define EXPLOSION_FORCE_GENERATOR_H_
+
 #include "ForceGenerator.h"
 class ExplosionForceGenerator : public ForceGenerator
 {
@@ -11,8 +13,8 @@ protected:
 
 public:
 	ExplosionForceGenerator(float K, float timeConst, Vector3 origin, float vel, float radius);
-
+	virtual ~ExplosionForceGenerator() {}
 	virtual void updateForce(Particle* particle, double t);
-
 };
+#endif // !EXPLOSION_FORCE_GENERATOR_H_
 

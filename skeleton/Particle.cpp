@@ -19,8 +19,15 @@ Particle::~Particle() { DeregisterRenderItem(renderItem_); }
 bool Particle::integrate(double t) {
 	timer_ += t;
 
+	Vector3 resulting_accel_;
 	// Get the accel considering the force accum
-	Vector3 resulting_accel_ = force_accum_ * inverse_mass_; // añadir accel
+	if (type_ == 1 || type_ == 2) {
+		resulting_accel_ = accel_ + force_accum_;
+	}
+	else {
+		resulting_accel_ = accel_ + force_accum_ * inverse_mass_;
+	}
+	
 	vel_ += resulting_accel_ * t;
 	
 	// Update linear velocity

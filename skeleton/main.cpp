@@ -295,8 +295,8 @@ void keyPress(unsigned char key, const PxTransform& camera)
 			20.0f, // Mass
 			Vector4(0.0f, 0.3f, 1.0f, 1.0f), // Color
 			Vector3(0.0f, 70.0f, 0.0f), // Pos
-			Vector3(0.0f, 10.0f, 0.0f), // Vel  
-			Vector3(0.0f, 0.0f, 0.0f), // Accel
+			Vector3(0.0f, 0.0f, 0.0f), // Vel  
+			Vector3(0.0f, 5.0f, 0.0f), // Accel
 			0.9f,
 			20.0f);
 	}

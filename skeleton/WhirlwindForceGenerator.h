@@ -4,13 +4,9 @@
 #include "WindForceGenerator.h"
 class WhirlwindForceGenerator : public WindForceGenerator
 {
-private:
-	PxShape* cube_ = nullptr;
-	PxTransform tr_;
-	RenderItem* renderItem_ = nullptr;
-
 public:
 	WhirlwindForceGenerator(const float K, Vector3 origin, Vector3 size);
+	virtual ~WhirlwindForceGenerator() {}
 
 	virtual void updateForce(Particle* p, double t) override;
 
