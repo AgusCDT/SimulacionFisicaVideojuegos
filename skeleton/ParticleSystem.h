@@ -10,6 +10,7 @@
 #include "ParticleForceRegistry.h"
 #include "WhirlwindForceGenerator.h"
 #include "ExplosionForceGenerator.h"
+#include "AnchoredSpringFG.h"
 
 class ParticleSystem
 {
@@ -45,7 +46,14 @@ public:
 
 	void createGenerators(); // Creacíon de generadores
 
+	void gravedad(Vector3 g);
+	void viento();
+	void torbellino();
 	void explosion(); // Añade el generador de explosion a las partículas
+
+	void generateSpringDemo1();
+	void generateSpringDemo2();
+	void changeSpringK(double k);
 
 };
 

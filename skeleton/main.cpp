@@ -241,76 +241,32 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	//	break;
 	//}
 #pragma endregion
-
+case 'G':
+{
+	
+	particleSystem_->generateForcedParticle(1, CreateShape(PxSphereGeometry(2.0f)),
+		2.0f, // Mass
+		Vector4(1.0f, 0.0f, 0.0f, 1.0f), // Color
+		Vector3(0.0f, 100.0f, 0.0f), // Pos
+		Vector3(0.0f, 0.0f, 0.0f), // Vel  
+		Vector3(0.0f, 0.0f, 0.0f), // Accel
+		0.9f,
+		30.0f);
+}
+break;
 	case 'H':// ACTIVIDAD 1, 3 partículas
 	{
-		// GRAVEDAD NORMAL
-		particleSystem_->generateForcedParticle(1, CreateShape(PxSphereGeometry(2.0f)),
-			2.0f, // Mass
-			Vector4(1.0f, 0.0f, 0.0f, 1.0f), // Color
-			Vector3(0.0f, 250.0f, 0.0f), // Pos
-			Vector3(0.0f, 0.0f, 0.0f), // Vel  
-			Vector3(0.0f, 0.0f, 0.0f), // Accel
-			0.9f,
-			8.0f);
-		// MAS GRAVEDAD
-		particleSystem_->generateForcedParticle(2, CreateShape(PxSphereGeometry(2.0f)),
-			2.0f, // Mass
-			Vector4(1.0f, 1.0f, 0.0f, 1.0f), // Color
-			Vector3(20.0f, 250.0f, -20.0f), // Pos
-			Vector3(0.0f, 0.0f, 0.0f), // Vel  
-			Vector3(0.0f, 0.0f, 0.0f), // Accel
-			0.9f,
-			8.0f);
-		// GRAVEDAD NORMAL Y DISTINTA MASA
-		particleSystem_->generateForcedParticle(1, CreateShape(PxSphereGeometry(2.0f)),
-			10.0f, // Mass
-			Vector4(0.5f, 0.5f, 0.0f, 1.0f), // Color
-			Vector3(40.0f, 250.0f, -40.0f), // Pos
-			Vector3(0.0f, 0.0f, 0.0f), // Vel  
-			Vector3(0.0f, 0.0f, 0.0f), // Accel
-			0.9f,
-			8.0f);
+		particleSystem_->gravedad({0.0f, -9.8f, 0.0f});
 	}
 	break;
 	case 'J': // ACTIVIDAD 2, VIENTO
 	{
-		particleSystem_->generateForcedParticle(3, CreateShape(PxSphereGeometry(2.0f)),
-			2.0f, // Mass
-			Vector4(0.0f, 0.0f, 1.0f, 1.0f), // Color
-			Vector3(0.0f, 30.0f, 0.0f), // Pos
-			Vector3(0.0f, 0.0f, 0.0f), // Vel  
-			Vector3(0.0f, 0.0f, 0.0f), // Accel
-			0.9f,
-			20.0f);
-		particleSystem_->generateForcedParticle(3, CreateShape(PxSphereGeometry(2.0f)),
-			20.0f, // Mass
-			Vector4(0.0f, 0.0f, 0.5f, 1.0f), // Color
-			Vector3(0.0f, 50.0f, 0.0f), // Pos
-			Vector3(0.0f, 0.0f, 0.0f), // Vel  
-			Vector3(0.0f, 0.0f, 0.0f), // Accel
-			0.9f,
-			20.0f);
-		particleSystem_->generateForcedParticle(3, CreateShape(PxSphereGeometry(2.0f)),
-			20.0f, // Mass
-			Vector4(0.0f, 0.3f, 1.0f, 1.0f), // Color
-			Vector3(0.0f, 70.0f, 0.0f), // Pos
-			Vector3(0.0f, 0.0f, 0.0f), // Vel  
-			Vector3(0.0f, 5.0f, 0.0f), // Accel
-			0.9f,
-			20.0f);
+		particleSystem_->viento();
 	}
 	break;
 	case 'K': // ACTIVIDAD 3, TORBELLINO
 	{
-		particleSystem_->generateForcedParticle(4, CreateShape(PxSphereGeometry(2.0f)),
-			0.5f, // Mass
-			Vector4(0.0f, 1.0f, 0.0f, 1.0f), // Color
-			Vector3(0.0f, 0.0f, 0.0f), // Pos
-			Vector3(0.0f, 0.0f, 0.0f), // Vel  
-			Vector3(0.0f, 0.0f, 0.0f), // Accel
-			0.9f,
-			20.0f);	
+		particleSystem_->torbellino();
 	}
 	break;
 	case 'L': // ACTIVIDAD 4, EXPLOSION
@@ -362,6 +318,8 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		particleSystem_->explosion();
 	}
 	break;
+	case 'Z':
+		particleSystem_->generateSpringDemo1();
 	}
 }
 
