@@ -110,16 +110,8 @@ void ParticleSystem::explosion()
 
 void ParticleSystem::generateSpringDemo1()
 {
-	// First one standard spring uniting 2 particles
-	Particle* p1 = new Particle(1, CreateShape(PxSphereGeometry(2.0f)),
-		2.0f, // Mass
-		Vector4(1.0f, 0.0f, 0.0f, 1.0f), // Color
-		Vector3(0.0f, 20.0f, 10.0f), // Pos
-		Vector3(0.0f, 0.0f, 0.0f), // Vel  
-		Vector3(0.0f, 0.0f, 0.0f), // Accel
-		0.85f,
-		30.0f);
-	Particle* p2 = new Particle(1, CreateShape(PxSphereGeometry(2.0f)),
+	// Then one spring with one fixed side
+	Particle* p3 = new Particle(1, CreateShape(PxSphereGeometry(2.0f)),
 		2.0f, // Mass
 		Vector4(1.0f, 1.0f, 0.0f, 1.0f), // Color
 		Vector3(0.0f, 20.0f, 0.0f), // Pos
@@ -127,29 +119,11 @@ void ParticleSystem::generateSpringDemo1()
 		Vector3(0.0f, 0.0f, 0.0f), // Accel
 		0.85f,
 		30.0f);
-	SpringForceGenerator* f1 = new SpringForceGenerator(1, 10, p2);
-	pForceRegistry_->addRegistry(f1, p1);
-	SpringForceGenerator* f2 = new SpringForceGenerator(1, 10, p1);
-	pForceRegistry_->addRegistry(f2, p2);
-	forceGenerators_.push_back(f1);
-	forceGenerators_.push_back(f2);
-	particles_.push_back(p1);
-	particles_.push_back(p2);
-	/*p1->addForce({ 0, 0, 1000 });*/
-
-	// Then one spring with one fixed side
-	Particle* p3 = new Particle(1, CreateShape(PxBoxGeometry(10, 10, 10)),
-		2.0f, // Mass
-		Vector4(1.0f, 1.0f, 0.0f, 1.0f), // Color
-		Vector3(0.0f, 30.0f, 0.0f), // Pos
-		Vector3(0.0f, 0.0f, 0.0f), // Vel  
-		Vector3(0.0f, 0.0f, 0.0f), // Accel
-		0.85f,
-		30.0f);
-	AnchoredSpringFG* f3 = new AnchoredSpringFG(1, 10, { 10.0, 20.0, 0.0 });
+	f3 = new AnchoredSpringFG(1, 100, { p3->getPos().x, p3->getPos().y, p3->getPos().z});
 	pForceRegistry_->addRegistry(f3, p3);
 	forceGenerators_.push_back(f3);
 	particles_.push_back(p3);
+	/*p3->addForce({ 1000, 0, 0 });*/
 }
 
 void ParticleSystem::generateSpringDemo2()
@@ -181,7 +155,110 @@ void ParticleSystem::generateSpringDemo2()
 	particles_.push_back(p2);
 }
 
-void ParticleSystem::changeSpringK(double k)
+void ParticleSystem::generateElasticBand()
 {
+	// First one standard spring uniting 2 particles
+	Particle* p1 = new Particle(1, CreateShape(PxSphereGeometry(2.0f)),
+		2.0f, // Mass
+		Vector4(1.0f, 0.0f, 0.0f, 1.0f), // Color
+		Vector3(-10.0f, 20.0f, 0.0f), // Pos
+		Vector3(0.0f, 0.0f, 0.0f), // Vel  
+		Vector3(0.0f, 0.0f, 0.0f), // Accel
+		0.85f,
+		30.0f);
+	Particle* p2 = new Particle(1, CreateShape(PxSphereGeometry(2.0f)),
+		2.0f, // Mass
+		Vector4(1.0f, 1.0f, 0.0f, 1.0f), // Color
+		Vector3(10.0f, 20.0f, 0.0f), // Pos
+		Vector3(0.0f, 0.0f, 0.0f), // Vel  
+		Vector3(0.0f, 0.0f, 0.0f), // Accel
+		0.85f,
+		30.0f);
+	ElasticForceGenerator* f1 = new ElasticForceGenerator(1, 10, p2);
+	pForceRegistry_->addRegistry(f1, p1);
+	ElasticForceGenerator* f2 = new ElasticForceGenerator(1, 10, p1);
+	pForceRegistry_->addRegistry(f2, p2);
+	forceGenerators_.push_back(f1);
+	forceGenerators_.push_back(f2);
+	particles_.push_back(p1);
+	particles_.push_back(p2);
+}
 
+void ParticleSystem::generateSlinky()
+{
+	Particle* p1 = new Particle(1, CreateShape(PxSphereGeometry(2.0f)),
+		2.0f, // Mass
+		Vector4(1.0f, 0.0f, 0.0f, 1.0f), // Color
+		Vector3(-10.0f, 50.0f, 0.0f), // Pos
+		Vector3(0.0f, 0.0f, 0.0f), // Vel  
+		Vector3(0.0f, 0.0f, 0.0f), // Accel
+		0.85f,
+		30.0f);
+	Particle* p2 = new Particle(1, CreateShape(PxSphereGeometry(2.0f)),
+		2.0f, // Mass
+		Vector4(1.0f, 1.0f, 0.0f, 1.0f), // Color
+		Vector3(10.0f, 45.0f, 0.0f), // Pos
+		Vector3(0.0f, 0.0f, 0.0f), // Vel  
+		Vector3(0.0f, 0.0f, 0.0f), // Accel
+		0.85f,
+		30.0f);
+	Particle* p3 = new Particle(1, CreateShape(PxSphereGeometry(2.0f)),
+		2.0f, // Mass
+		Vector4(1.0f, 1.0f, 0.0f, 1.0f), // Color
+		Vector3(10.0f, 40.0f, 0.0f), // Pos
+		Vector3(0.0f, 0.0f, 0.0f), // Vel  
+		Vector3(0.0f, 0.0f, 0.0f), // Accel
+		0.85f,
+		30.0f);
+	Particle* p4 = new Particle(1, CreateShape(PxSphereGeometry(2.0f)),
+		2.0f, // Mass
+		Vector4(1.0f, 1.0f, 0.0f, 1.0f), // Color
+		Vector3(10.0f, 35.0f, 0.0f), // Pos
+		Vector3(0.0f, 0.0f, 0.0f), // Vel  
+		Vector3(0.0f, 0.0f, 0.0f), // Accel
+		0.85f,
+		30.0f);
+	Particle* p5 = new Particle(1, CreateShape(PxSphereGeometry(2.0f)),
+		2.0f, // Mass
+		Vector4(1.0f, 1.0f, 0.0f, 1.0f), // Color
+		Vector3(10.0f, 30.0f, 0.0f), // Pos
+		Vector3(0.0f, 0.0f, 0.0f), // Vel  
+		Vector3(0.0f, 0.0f, 0.0f), // Accel
+		0.85f,
+		30.0f);
+	Particle* p6 = new Particle(1, CreateShape(PxSphereGeometry(2.0f)),
+		2.0f, // Mass
+		Vector4(1.0f, 1.0f, 0.0f, 1.0f), // Color
+		Vector3(10.0f, 25.0f, 0.0f), // Pos
+		Vector3(0.0f, 0.0f, 0.0f), // Vel  
+		Vector3(0.0f, 0.0f, 0.0f), // Accel
+		0.85f,
+		30.0f);
+
+
+	SpringForceGenerator* f1 = new SpringForceGenerator(1, 10, p2);
+	pForceRegistry_->addRegistry(f1, p1);
+	SpringForceGenerator* f2 = new SpringForceGenerator(1, 10, p3);
+	pForceRegistry_->addRegistry(f2, p2);
+	SpringForceGenerator* f3 = new SpringForceGenerator(1, 10, p4);
+	pForceRegistry_->addRegistry(f3, p3);
+	SpringForceGenerator* f4 = new SpringForceGenerator(1, 10, p5);
+	pForceRegistry_->addRegistry(f4, p4);
+	SpringForceGenerator* f5 = new SpringForceGenerator(1, 10, p6);
+	pForceRegistry_->addRegistry(f5, p5);
+	SpringForceGenerator* f6 = new SpringForceGenerator(1, 10, p6);
+	pForceRegistry_->addRegistry(f6, p6);
+
+	forceGenerators_.push_back(f1);
+	forceGenerators_.push_back(f2);
+	forceGenerators_.push_back(f3);
+	forceGenerators_.push_back(f4);
+	forceGenerators_.push_back(f5);
+	forceGenerators_.push_back(f6);
+	particles_.push_back(p1);
+	particles_.push_back(p2);
+	particles_.push_back(p3);
+	particles_.push_back(p4);
+	particles_.push_back(p5);
+	particles_.push_back(p6);
 }

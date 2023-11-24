@@ -11,6 +11,7 @@
 #include "WhirlwindForceGenerator.h"
 #include "ExplosionForceGenerator.h"
 #include "AnchoredSpringFG.h"
+#include "ElasticForceGenerator.h"
 
 class ParticleSystem
 {
@@ -29,6 +30,8 @@ protected:
 	WindForceGenerator* wForceGen_;
 	WhirlwindForceGenerator* whirlForceGen_;
 	ExplosionForceGenerator* eForceGen_;
+
+	AnchoredSpringFG* f3;
 public:
 	ParticleSystem();
 	virtual ~ParticleSystem() {};
@@ -53,7 +56,9 @@ public:
 
 	void generateSpringDemo1();
 	void generateSpringDemo2();
-	void changeSpringK(double k);
+	inline void changeSpringK(double k){ f3->setK(k); }
+	void generateElasticBand();
+	void generateSlinky();
 
 };
 

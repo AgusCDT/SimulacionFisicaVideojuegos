@@ -72,7 +72,7 @@ void initPhysics(bool interactive)
 	gScene = gPhysics->createScene(sceneDesc);
 
 #pragma region P1
-	suelo_ = new Suelo(240, 10, 240, Vector4(0.0f, 0.0f, 0.0f, 1.0f)); // "Suelo"
+	//suelo_ = new Suelo(240, 10, 240, Vector4(0.0f, 0.0f, 0.0f, 1.0f)); // "Suelo"
 
 	/*diana_ = new Diana(10, 10, 10, Vector4(0.0f, 0.0f, 0.0f, 1.0f));*/
 #pragma endregion
@@ -241,22 +241,22 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	//	break;
 	//}
 #pragma endregion
-case 'G':
-{
-	
-	particleSystem_->generateForcedParticle(1, CreateShape(PxSphereGeometry(2.0f)),
-		2.0f, // Mass
-		Vector4(1.0f, 0.0f, 0.0f, 1.0f), // Color
-		Vector3(0.0f, 100.0f, 0.0f), // Pos
-		Vector3(0.0f, 0.0f, 0.0f), // Vel  
-		Vector3(0.0f, 0.0f, 0.0f), // Accel
-		0.9f,
-		30.0f);
-}
-break;
+	case 'G':
+	{
+
+		particleSystem_->generateForcedParticle(1, CreateShape(PxSphereGeometry(2.0f)),
+			2.0f, // Mass
+			Vector4(1.0f, 0.0f, 0.0f, 1.0f), // Color
+			Vector3(0.0f, 100.0f, 0.0f), // Pos
+			Vector3(0.0f, 0.0f, 0.0f), // Vel  
+			Vector3(0.0f, 0.0f, 0.0f), // Accel
+			0.9f,
+			30.0f);
+	}
+	break;
 	case 'H':// ACTIVIDAD 1, 3 partículas
 	{
-		particleSystem_->gravedad({0.0f, -9.8f, 0.0f});
+		particleSystem_->gravedad({ 0.0f, -9.8f, 0.0f });
 	}
 	break;
 	case 'J': // ACTIVIDAD 2, VIENTO
@@ -270,7 +270,7 @@ break;
 	}
 	break;
 	case 'L': // ACTIVIDAD 4, EXPLOSION
-	{	
+	{
 		particleSystem_->generateForcedParticle(5, CreateShape(PxSphereGeometry(2.0f)),
 			1.0f, // Mass
 			Vector4(0.0f, 1.0f, 0.0f, 1.0f), // Color
@@ -278,7 +278,7 @@ break;
 			Vector3(0.0f, 0.0f, 0.0f), // Vel  
 			Vector3(0.0f, 0.0f, 0.0f), // Accel
 			0.9f,
-			20.0f);	
+			20.0f);
 		particleSystem_->generateForcedParticle(5, CreateShape(PxSphereGeometry(2.0f)),
 			2.0f, // Mass
 			Vector4(0.2f, 1.0f, 0.0f, 1.0f), // Color
@@ -314,12 +314,30 @@ break;
 	}
 	break;
 	case 'M': // ACTIVIDAD 4, EXPLOSION
-	{		
+	{
 		particleSystem_->explosion();
 	}
 	break;
 	case 'Z':
+	{
 		particleSystem_->generateSpringDemo1();
+	}
+	break;
+	case 'A':
+	{
+		particleSystem_->changeSpringK(250);
+	}
+	break;
+	case 'X':
+	{
+		particleSystem_->generateElasticBand();
+	}
+	break;
+	case 'C':
+	{
+		particleSystem_->generateSlinky();
+	}
+	break;
 	}
 }
 
