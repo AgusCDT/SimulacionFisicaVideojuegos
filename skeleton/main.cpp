@@ -338,6 +338,11 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		particleSystem_->generateSlinky();
 	}
 	break;
+	case 'V':
+	{
+		particleSystem_->generateBuoyancyDemo();
+	}
+	break;
 	}
 }
 

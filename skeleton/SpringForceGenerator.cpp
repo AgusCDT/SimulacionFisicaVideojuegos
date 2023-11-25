@@ -19,6 +19,4 @@ void SpringForceGenerator::updateForce(Particle* p, double t)
 
 	force = relative_pos_vector * delta_x * k_;
 	p->addForce(force);
-	/*cout << "X: " << p->getPos().x << endl;*/
-	cout << "Y: " << p->getPos().y << endl;
 }

@@ -174,9 +174,9 @@ void ParticleSystem::generateElasticBand()
 		Vector3(0.0f, 0.0f, 0.0f), // Accel
 		0.85f,
 		30.0f);
-	ElasticForceGenerator* f1 = new ElasticForceGenerator(1, 10, p2);
+	ElasticForceGenerator* f1 = new ElasticForceGenerator(100, 10, p2);
 	pForceRegistry_->addRegistry(f1, p1);
-	ElasticForceGenerator* f2 = new ElasticForceGenerator(1, 10, p1);
+	ElasticForceGenerator* f2 = new ElasticForceGenerator(100, 10, p1);
 	pForceRegistry_->addRegistry(f2, p2);
 	forceGenerators_.push_back(f1);
 	forceGenerators_.push_back(f2);
@@ -188,15 +188,15 @@ void ParticleSystem::generateSlinky()
 {
 	Particle* p1 = new Particle(1, CreateShape(PxSphereGeometry(2.0f)),
 		2.0f, // Mass
-		Vector4(1.0f, 0.0f, 0.0f, 1.0f), // Color
-		Vector3(-10.0f, 50.0f, 0.0f), // Pos
+		Vector4(1.0f, 1.0f, 0.0f, 1.0f), // Color
+		Vector3(10.0f, 50.0f, 0.0f), // Pos
 		Vector3(0.0f, 0.0f, 0.0f), // Vel  
 		Vector3(0.0f, 0.0f, 0.0f), // Accel
 		0.85f,
 		30.0f);
 	Particle* p2 = new Particle(1, CreateShape(PxSphereGeometry(2.0f)),
 		2.0f, // Mass
-		Vector4(1.0f, 1.0f, 0.0f, 1.0f), // Color
+		Vector4(1.0f, 0.8f, 0.0f, 1.0f), // Color
 		Vector3(10.0f, 45.0f, 0.0f), // Pos
 		Vector3(0.0f, 0.0f, 0.0f), // Vel  
 		Vector3(0.0f, 0.0f, 0.0f), // Accel
@@ -204,7 +204,7 @@ void ParticleSystem::generateSlinky()
 		30.0f);
 	Particle* p3 = new Particle(1, CreateShape(PxSphereGeometry(2.0f)),
 		2.0f, // Mass
-		Vector4(1.0f, 1.0f, 0.0f, 1.0f), // Color
+		Vector4(1.0f, 0.6f, 0.0f, 1.0f), // Color
 		Vector3(10.0f, 40.0f, 0.0f), // Pos
 		Vector3(0.0f, 0.0f, 0.0f), // Vel  
 		Vector3(0.0f, 0.0f, 0.0f), // Accel
@@ -212,7 +212,7 @@ void ParticleSystem::generateSlinky()
 		30.0f);
 	Particle* p4 = new Particle(1, CreateShape(PxSphereGeometry(2.0f)),
 		2.0f, // Mass
-		Vector4(1.0f, 1.0f, 0.0f, 1.0f), // Color
+		Vector4(1.0f, 0.4f, 0.0f, 1.0f), // Color
 		Vector3(10.0f, 35.0f, 0.0f), // Pos
 		Vector3(0.0f, 0.0f, 0.0f), // Vel  
 		Vector3(0.0f, 0.0f, 0.0f), // Accel
@@ -220,7 +220,7 @@ void ParticleSystem::generateSlinky()
 		30.0f);
 	Particle* p5 = new Particle(1, CreateShape(PxSphereGeometry(2.0f)),
 		2.0f, // Mass
-		Vector4(1.0f, 1.0f, 0.0f, 1.0f), // Color
+		Vector4(1.0f, 0.2f, 0.0f, 1.0f), // Color
 		Vector3(10.0f, 30.0f, 0.0f), // Pos
 		Vector3(0.0f, 0.0f, 0.0f), // Vel  
 		Vector3(0.0f, 0.0f, 0.0f), // Accel
@@ -228,7 +228,7 @@ void ParticleSystem::generateSlinky()
 		30.0f);
 	Particle* p6 = new Particle(1, CreateShape(PxSphereGeometry(2.0f)),
 		2.0f, // Mass
-		Vector4(1.0f, 1.0f, 0.0f, 1.0f), // Color
+		Vector4(1.0f, 0.0f, 0.0f, 1.0f), // Color
 		Vector3(10.0f, 25.0f, 0.0f), // Pos
 		Vector3(0.0f, 0.0f, 0.0f), // Vel  
 		Vector3(0.0f, 0.0f, 0.0f), // Accel
@@ -236,29 +236,59 @@ void ParticleSystem::generateSlinky()
 		30.0f);
 
 
-	SpringForceGenerator* f1 = new SpringForceGenerator(1, 10, p2);
-	pForceRegistry_->addRegistry(f1, p1);
-	SpringForceGenerator* f2 = new SpringForceGenerator(1, 10, p3);
-	pForceRegistry_->addRegistry(f2, p2);
-	SpringForceGenerator* f3 = new SpringForceGenerator(1, 10, p4);
-	pForceRegistry_->addRegistry(f3, p3);
-	SpringForceGenerator* f4 = new SpringForceGenerator(1, 10, p5);
-	pForceRegistry_->addRegistry(f4, p4);
-	SpringForceGenerator* f5 = new SpringForceGenerator(1, 10, p6);
-	pForceRegistry_->addRegistry(f5, p5);
-	SpringForceGenerator* f6 = new SpringForceGenerator(1, 10, p6);
-	pForceRegistry_->addRegistry(f6, p6);
+	ElasticForceGenerator* f1 = new ElasticForceGenerator(10, 100, p1);
+	pForceRegistry_->addRegistry(f1, p2);
+	ElasticForceGenerator* f2 = new ElasticForceGenerator(100, 10, p2);
+	pForceRegistry_->addRegistry(f2, p3);
+	ElasticForceGenerator* f3 = new ElasticForceGenerator(10, 100, p3);
+	pForceRegistry_->addRegistry(f3, p4);
+	ElasticForceGenerator* f4 = new ElasticForceGenerator(100, 10, p4);
+	pForceRegistry_->addRegistry(f4, p5);
+	ElasticForceGenerator* f5 = new ElasticForceGenerator(10, 100, p5);
+	pForceRegistry_->addRegistry(f5, p6);
 
 	forceGenerators_.push_back(f1);
 	forceGenerators_.push_back(f2);
 	forceGenerators_.push_back(f3);
 	forceGenerators_.push_back(f4);
 	forceGenerators_.push_back(f5);
-	forceGenerators_.push_back(f6);
+
 	particles_.push_back(p1);
 	particles_.push_back(p2);
 	particles_.push_back(p3);
 	particles_.push_back(p4);
 	particles_.push_back(p5);
 	particles_.push_back(p6);
+
+	/*p1->addForce({ 0, 1000, 0 });*/
+}
+
+void ParticleSystem::generateBuoyancyDemo()
+{
+	Particle* p1 = new Particle(1, CreateShape(PxBoxGeometry(20, 0.1, 20)), // Superficie del agua
+		2.0f, // Mass
+		Vector4(0.0f, 0.0f, 1.0f, 1.0f), // Color
+		Vector3(10.0f, 10.0f, 0.0f), // Pos
+		Vector3(0.0f, 0.0f, 0.0f), // Vel  
+		Vector3(0.0f, 0.0f, 0.0f), // Accel
+		0.85f,
+		30.0f);
+	Particle* p2 = new Particle(1, CreateShape(PxBoxGeometry(5, 5, 5)), // Objeto que flota
+		2.0f, // Mass
+		Vector4(0.0f, 1.0f, 0.0f, 1.0f), // Color
+		Vector3(10.0f, 20.0f, 0.0f), // Pos
+		Vector3(0.0f, 0.0f, 0.0f), // Vel  
+		Vector3(0.0f, 0.0f, 0.0f), // Accel
+		0.85f,
+		30.0f);
+	GravityForceGenerator* g1 = new GravityForceGenerator({ 0, -9.8f, 0 });
+	pForceRegistry_->addRegistry(g1, p2);
+	BuoyancyForceGenerator* f1 = new BuoyancyForceGenerator(5, 5, 100, p1);
+	pForceRegistry_->addRegistry(f1, p2);
+
+	forceGenerators_.push_back(g1);
+	forceGenerators_.push_back(f1);
+
+	particles_.push_back(p1);
+	particles_.push_back(p2);
 }

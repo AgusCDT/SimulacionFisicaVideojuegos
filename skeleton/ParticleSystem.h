@@ -12,6 +12,7 @@
 #include "ExplosionForceGenerator.h"
 #include "AnchoredSpringFG.h"
 #include "ElasticForceGenerator.h"
+#include "BuoyancyForceGenerator.h"
 
 class ParticleSystem
 {
@@ -59,6 +60,7 @@ public:
 	inline void changeSpringK(double k){ f3->setK(k); }
 	void generateElasticBand();
 	void generateSlinky();
+	void generateBuoyancyDemo();
 
 };
 
