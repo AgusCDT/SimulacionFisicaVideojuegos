@@ -15,7 +15,7 @@ void BuoyancyForceGenerator::updateForce(Particle* p, double t)
 
 	Vector3 f(0, 0, 0);
 	float immersed = 0.0f;
-	if (h - 0 > height_ * 0.5) {
+	if (h - h0 > height_ * 0.5) {
 		immersed = 0.0f;
 	}
 	else if (h0 - h > height_ * 0.5) {
@@ -25,7 +25,7 @@ void BuoyancyForceGenerator::updateForce(Particle* p, double t)
 	else {
 		immersed = (h0 - h) / height_ + 0.5;
 	}
-	f.y = liquid_density_ * volume_ * immersed * gravity_;
+	f.y = liquid_density_ * volume_ * immersed;
 
 	p->addForce(f);
 }

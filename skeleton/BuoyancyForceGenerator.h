@@ -6,7 +6,6 @@ protected:
 	float height_;
 	float volume_;
 	float liquid_density_;
-	float gravity_;
 
 	Particle* liquid_particle_;
 public:

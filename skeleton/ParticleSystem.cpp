@@ -259,8 +259,6 @@ void ParticleSystem::generateSlinky()
 	particles_.push_back(p4);
 	particles_.push_back(p5);
 	particles_.push_back(p6);
-
-	/*p1->addForce({ 0, 1000, 0 });*/
 }
 
 void ParticleSystem::generateBuoyancyDemo()
@@ -283,11 +281,11 @@ void ParticleSystem::generateBuoyancyDemo()
 		30.0f);
 	GravityForceGenerator* g1 = new GravityForceGenerator({ 0, -9.8f, 0 });
 	pForceRegistry_->addRegistry(g1, p2);
-	BuoyancyForceGenerator* f1 = new BuoyancyForceGenerator(5, 5, 100, p1);
+	BuoyancyForceGenerator* f1 = new BuoyancyForceGenerator(5, 5, 1000, p1);
 	pForceRegistry_->addRegistry(f1, p2);
 
-	forceGenerators_.push_back(g1);
-	forceGenerators_.push_back(f1);
+	/*forceGenerators_.push_back(g1);
+	forceGenerators_.push_back(f1);*/
 
 	particles_.push_back(p1);
 	particles_.push_back(p2);
