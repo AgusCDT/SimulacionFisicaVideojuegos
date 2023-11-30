@@ -13,5 +13,8 @@ public:
 	virtual ~BuoyancyForceGenerator(){}
 
 	virtual void updateForce(Particle* p, double t);
+
+	inline void changeVolume() { volume_ += 0.5f; }
+	inline void changeLiquidDensity(float d) { liquid_density_ = d; }
 };
 

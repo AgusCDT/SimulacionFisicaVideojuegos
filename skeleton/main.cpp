@@ -320,27 +320,46 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	break;
 	case 'Z':
 	{
-		particleSystem_->generateSpringDemo1();
+		particleSystem_->generateSpringDemo1(); // Anchored spring
 	}
 	break;
-	case 'A':
+	case 'U':
 	{
-		particleSystem_->changeSpringK(250);
+		particleSystem_->moreSpringK(10);
+	}
+	break;
+	case 'I':
+	{
+		particleSystem_->lessSpringK(10);
 	}
 	break;
 	case 'X':
 	{
-		particleSystem_->generateElasticBand();
+		particleSystem_->generateSpringDemo2();
 	}
 	break;
 	case 'C':
 	{
-		particleSystem_->generateSlinky();
+		particleSystem_->generateElasticBand();
 	}
 	break;
 	case 'V':
 	{
+		particleSystem_->generateSlinky();
+	}
+	break;
+	case 'B':
+	{
 		particleSystem_->generateBuoyancyDemo();
+	}
+	break;
+	case 'O':
+	{
+		particleSystem_->changeVolume();
+	}
+	case 'P':
+	{
+		particleSystem_->changeLiquidDensity(1840.0f); // Ácido sulfúrico
 	}
 	break;
 	}

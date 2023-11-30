@@ -33,6 +33,7 @@ protected:
 	ExplosionForceGenerator* eForceGen_;
 
 	AnchoredSpringFG* f3;
+	BuoyancyForceGenerator* b1;
 public:
 	ParticleSystem();
 	virtual ~ParticleSystem() {};
@@ -57,10 +58,13 @@ public:
 
 	void generateSpringDemo1();
 	void generateSpringDemo2();
-	inline void changeSpringK(double k){ f3->setK(k); }
+	inline void moreSpringK(double k){ f3->moreK(k); }
+	inline void lessSpringK(double k) { f3->lessK(k); }
 	void generateElasticBand();
 	void generateSlinky();
 	void generateBuoyancyDemo();
+	inline void changeVolume() { b1->changeVolume(); }
+	inline void changeLiquidDensity(float d) { b1->changeLiquidDensity(d); }
 
 };
 

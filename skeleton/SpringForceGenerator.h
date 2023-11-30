@@ -14,6 +14,7 @@ public:
 
 	virtual void updateForce(Particle* p, double t);
 
-	inline void setK(double k) { k_ = k; }
+	inline void moreK(double k) { k_ += k; }
+	inline void lessK(double k) { k_ -= k; }
 };
 
