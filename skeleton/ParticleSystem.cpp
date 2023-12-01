@@ -71,7 +71,7 @@ void ParticleSystem::createGenerators()
 	// P3
 	gForceGen1_ = new GravityForceGenerator({ 0, -9.8f, 0 });
 	forceGenerators_.push_back(gForceGen1_);
-	wForceGen_ = new WindForceGenerator(10.0f, 1.0f, Vector3(0.0f, 50.0f, 0.0f), Vector3(0.0f, 0.0f, 0.0f), Vector3(50.0f, 100.0f, 50.0f));
+	wForceGen_ = new WindForceGenerator(10.0f, 1.0f, Vector3(0.0f, 10.0f, 0.0f), Vector3(0.0f, 0.0f, 0.0f), Vector3(50.0f, 100.0f, 50.0f));
 	forceGenerators_.push_back(wForceGen_);
 	whirlForceGen_ = new WhirlwindForceGenerator(1.0f, Vector3(20.0f, 0.0f, 20.0f), Vector3(200.0f, 100.0f, 200.0f));
 	forceGenerators_.push_back(whirlForceGen_);
@@ -161,7 +161,7 @@ void ParticleSystem::generateElasticBand()
 	Particle* p1 = new Particle(1, CreateShape(PxSphereGeometry(2.0f)),
 		2.0f, // Mass
 		Vector4(1.0f, 0.0f, 0.0f, 1.0f), // Color
-		Vector3(-10.0f, 20.0f, 0.0f), // Pos
+		Vector3(-10.0f, 0.0f, -10.0f), // Pos
 		Vector3(0.0f, 0.0f, 0.0f), // Vel  
 		Vector3(0.0f, 0.0f, 0.0f), // Accel
 		0.85f,
@@ -169,7 +169,7 @@ void ParticleSystem::generateElasticBand()
 	Particle* p2 = new Particle(1, CreateShape(PxSphereGeometry(2.0f)),
 		2.0f, // Mass
 		Vector4(1.0f, 1.0f, 0.0f, 1.0f), // Color
-		Vector3(10.0f, 20.0f, 0.0f), // Pos
+		Vector3(10.0f, 0.0f, -10.0f), // Pos
 		Vector3(0.0f, 0.0f, 0.0f), // Vel  
 		Vector3(0.0f, 0.0f, 0.0f), // Accel
 		0.85f,
@@ -187,7 +187,7 @@ void ParticleSystem::generateSlinky()
 	Particle* p1 = new Particle(1, CreateShape(PxSphereGeometry(2.0f)),
 		2.0f, // Mass
 		Vector4(1.0f, 1.0f, 0.0f, 1.0f), // Color
-		Vector3(10.0f, 100.0f, 0.0f), // Pos
+		Vector3(20.0f, 100.0f, 0.0f), // Pos
 		Vector3(0.0f, 0.0f, 0.0f), // Vel  
 		Vector3(0.0f, 0.0f, 0.0f), // Accel
 		0.85f,
@@ -195,7 +195,7 @@ void ParticleSystem::generateSlinky()
 	Particle* p2 = new Particle(1, CreateShape(PxSphereGeometry(2.0f)),
 		2.0f, // Mass
 		Vector4(1.0f, 0.8f, 0.0f, 1.0f), // Color
-		Vector3(10.0f, 90.0f, 0.0f), // Pos
+		Vector3(20.0f, 90.0f, 0.0f), // Pos
 		Vector3(0.0f, 0.0f, 0.0f), // Vel  
 		Vector3(0.0f, 0.0f, 0.0f), // Accel
 		0.85f,
@@ -203,7 +203,7 @@ void ParticleSystem::generateSlinky()
 	Particle* p3 = new Particle(1, CreateShape(PxSphereGeometry(2.0f)),
 		2.0f, // Mass
 		Vector4(1.0f, 0.6f, 0.0f, 1.0f), // Color
-		Vector3(10.0f, 80.0f, 0.0f), // Pos
+		Vector3(20.0f, 80.0f, 0.0f), // Pos
 		Vector3(0.0f, 0.0f, 0.0f), // Vel  
 		Vector3(0.0f, 0.0f, 0.0f), // Accel
 		0.85f,
@@ -211,7 +211,7 @@ void ParticleSystem::generateSlinky()
 	Particle* p4 = new Particle(1, CreateShape(PxSphereGeometry(2.0f)),
 		2.0f, // Mass
 		Vector4(1.0f, 0.4f, 0.0f, 1.0f), // Color
-		Vector3(10.0f, 70.0f, 0.0f), // Pos
+		Vector3(20.0f, 70.0f, 0.0f), // Pos
 		Vector3(0.0f, 0.0f, 0.0f), // Vel  
 		Vector3(0.0f, 0.0f, 0.0f), // Accel
 		0.85f,
@@ -219,7 +219,7 @@ void ParticleSystem::generateSlinky()
 	Particle* p5 = new Particle(1, CreateShape(PxSphereGeometry(2.0f)),
 		2.0f, // Mass
 		Vector4(1.0f, 0.2, 0.0f, 1.0f), // Color
-		Vector3(10.0f, 60.0f, 0.0f), // Pos
+		Vector3(20.0f, 60.0f, 0.0f), // Pos
 		Vector3(0.0f, 0.0f, 0.0f), // Vel  
 		Vector3(0.0f, 0.0f, 0.0f), // Accel
 		0.85f,
@@ -227,7 +227,7 @@ void ParticleSystem::generateSlinky()
 	Particle* p6 = new Particle(1, CreateShape(PxSphereGeometry(2.0f)),
 		2.0f, // Mass
 		Vector4(1.0f, 0.0f, 0.0f, 1.0f), // Color
-		Vector3(10.0f, 50.0f, 0.0f), // Pos
+		Vector3(20.0f, 50.0f, 0.0f), // Pos
 		Vector3(0.0f, 0.0f, 0.0f), // Vel  
 		Vector3(0.0f, 0.0f, 0.0f), // Accel
 		0.85f,
@@ -270,7 +270,7 @@ void ParticleSystem::generateBuoyancyDemo()
 	Particle* p1 = new Particle(1, CreateShape(PxBoxGeometry(20, 0.1, 20)), // Superficie del agua
 		2.0f, // Mass
 		Vector4(0.0f, 0.0f, 1.0f, 1.0f), // Color
-		Vector3(10.0f, 10.0f, 0.0f), // Pos
+		Vector3(30.0f, 10.0f, 0.0f), // Pos
 		Vector3(0.0f, 0.0f, 0.0f), // Vel  
 		Vector3(0.0f, 0.0f, 0.0f), // Accel
 		0.85f,
@@ -278,7 +278,7 @@ void ParticleSystem::generateBuoyancyDemo()
 	Particle* p2 = new Particle(1, CreateShape(PxBoxGeometry(5, 5, 5)), // Objeto que flota
 		50.0f, // Mass
 		Vector4(0.0f, 1.0f, 0.0f, 1.0f), // Color
-		Vector3(10.0f, 20.0f, 0.0f), // Pos
+		Vector3(30.0f, 20.0f, 0.0f), // Pos
 		Vector3(0.0f, 0.0f, 0.0f), // Vel  
 		Vector3(0.0f, 0.0f, 0.0f), // Accel
 		0.85f,

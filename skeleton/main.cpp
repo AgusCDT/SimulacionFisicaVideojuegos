@@ -77,6 +77,29 @@ void initPhysics(bool interactive)
 	/*diana_ = new Diana(10, 10, 10, Vector4(0.0f, 0.0f, 0.0f, 1.0f));*/
 #pragma endregion
 	particleSystem_ = new ParticleSystem();
+
+	// Generar suelo
+	PxRigidStatic* Suelo = gPhysics->createRigidStatic(PxTransform({ 0,0,0 }));
+	PxShape* shape = CreateShape(PxBoxGeometry(100, 0.1, 100));
+	Suelo->attachShape(*shape);
+	gScene->addActor(*Suelo);
+	// Pintar suelo
+	RenderItem* item;
+	item = new RenderItem(shape, Suelo, { 0.8, 0.8, 0.8, 1 });
+
+	// Añadir un actor dinámico
+	PxRigidDynamic* new_solid;
+	new_solid = gPhysics->createRigidDynamic(PxTransform({ -70, 200, -70 }));
+	new_solid->setLinearVelocity({ 0, 5, 0 });
+	new_solid->setAngularVelocity({ 0, 0, 0 });
+	PxShape* shape_ad = CreateShape(PxBoxGeometry(5, 5, 5));
+	new_solid->attachShape(*shape_ad);
+	PxRigidBodyExt::updateMassAndInertia(*new_solid, 0.15);
+	gScene->addActor(*new_solid);
+
+	// Pintar actor dinámico
+	RenderItem* dynamic_item;
+	dynamic_item = new RenderItem(shape_ad, new_solid, { 0.8, 0.8, 0.8, 1 });
 }
 
 
@@ -241,127 +264,127 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	//	break;
 	//}
 #pragma endregion
-	case 'G':
-	{
+	//case 'G':
+	//{
 
-		particleSystem_->generateForcedParticle(1, CreateShape(PxSphereGeometry(2.0f)),
-			2.0f, // Mass
-			Vector4(1.0f, 0.0f, 0.0f, 1.0f), // Color
-			Vector3(0.0f, 100.0f, 0.0f), // Pos
-			Vector3(0.0f, 0.0f, 0.0f), // Vel  
-			Vector3(0.0f, 0.0f, 0.0f), // Accel
-			0.9f,
-			30.0f);
-	}
-	break;
-	case 'H':// ACTIVIDAD 1, 3 partículas
-	{
-		particleSystem_->gravedad({ 0.0f, -9.8f, 0.0f });
-	}
-	break;
-	case 'J': // ACTIVIDAD 2, VIENTO
-	{
-		particleSystem_->viento();
-	}
-	break;
-	case 'K': // ACTIVIDAD 3, TORBELLINO
-	{
-		particleSystem_->torbellino();
-	}
-	break;
-	case 'L': // ACTIVIDAD 4, EXPLOSION
-	{
-		particleSystem_->generateForcedParticle(5, CreateShape(PxSphereGeometry(2.0f)),
-			1.0f, // Mass
-			Vector4(0.0f, 1.0f, 0.0f, 1.0f), // Color
-			Vector3(0.0f, 29.0f, 0.0f), // Pos
-			Vector3(0.0f, 0.0f, 0.0f), // Vel  
-			Vector3(0.0f, 0.0f, 0.0f), // Accel
-			0.9f,
-			20.0f);
-		particleSystem_->generateForcedParticle(5, CreateShape(PxSphereGeometry(2.0f)),
-			2.0f, // Mass
-			Vector4(0.2f, 1.0f, 0.0f, 1.0f), // Color
-			Vector3(20.0f, 20.0f, 0.0f), // Pos
-			Vector3(0.0f, 0.0f, 0.0f), // Vel  
-			Vector3(0.0f, 0.0f, 0.0f), // Accel
-			0.9f,
-			20.0f);
-		particleSystem_->generateForcedParticle(5, CreateShape(PxSphereGeometry(2.0f)),
-			3.0f, // Mass
-			Vector4(0.4f, 1.0f, 0.0f, 1.0f), // Color
-			Vector3(0.0f, 30.0f, 30.0f), // Pos
-			Vector3(0.0f, 0.0f, 0.0f), // Vel  
-			Vector3(0.0f, 0.0f, 0.0f), // Accel
-			0.9f,
-			20.0f);
-		particleSystem_->generateForcedParticle(5, CreateShape(PxSphereGeometry(2.0f)),
-			4.0f, // Mass
-			Vector4(0.6f, 1.0f, 0.0f, 1.0f), // Color
-			Vector3(0.0f, 10.0f, 20.0f), // Pos
-			Vector3(0.0f, 0.0f, 0.0f), // Vel  
-			Vector3(0.0f, 0.0f, 0.0f), // Accel
-			0.9f,
-			20.0f);
-		particleSystem_->generateForcedParticle(5, CreateShape(PxSphereGeometry(2.0f)),
-			5.0f, // Mass
-			Vector4(0.8f, 1.0f, 0.0f, 1.0f), // Color
-			Vector3(15.0f, 50.0f, 0.0f), // Pos
-			Vector3(0.0f, 0.0f, 0.0f), // Vel  
-			Vector3(0.0f, 0.0f, 0.0f), // Accel
-			0.9f,
-			20.0f);
-	}
-	break;
-	case 'M': // ACTIVIDAD 4, EXPLOSION
-	{
-		particleSystem_->explosion();
-	}
-	break;
-	case 'Z':
-	{
-		particleSystem_->generateSpringDemo1(); // Anchored spring
-	}
-	break;
-	case 'U':
-	{
-		particleSystem_->moreSpringK(10);
-	}
-	break;
-	case 'I':
-	{
-		particleSystem_->lessSpringK(10);
-	}
-	break;
-	case 'X':
-	{
-		particleSystem_->generateSpringDemo2();
-	}
-	break;
-	case 'C':
-	{
-		particleSystem_->generateElasticBand();
-	}
-	break;
-	case 'V':
-	{
-		particleSystem_->generateSlinky();
-	}
-	break;
-	case 'B':
-	{
-		particleSystem_->generateBuoyancyDemo();
-	}
-	break;
-	case 'O':
-	{
-		particleSystem_->changeVolume();
-	}
-	case 'P':
-	{
-		particleSystem_->changeLiquidDensity(1840.0f); // Ácido sulfúrico
-	}
-	break;
+	//	particleSystem_->generateForcedParticle(1, CreateShape(PxSphereGeometry(2.0f)),
+	//		2.0f, // Mass
+	//		Vector4(1.0f, 0.0f, 0.0f, 1.0f), // Color
+	//		Vector3(0.0f, 100.0f, 0.0f), // Pos
+	//		Vector3(0.0f, 0.0f, 0.0f), // Vel  
+	//		Vector3(0.0f, 0.0f, 0.0f), // Accel
+	//		0.9f,
+	//		30.0f);
+	//}
+	//break;
+	//case 'H':// ACTIVIDAD 1, 3 partículas
+	//{
+	//	particleSystem_->gravedad({ 0.0f, -9.8f, 0.0f });
+	//}
+	//break;
+	//case 'J': // ACTIVIDAD 2, VIENTO
+	//{
+	//	particleSystem_->viento();
+	//}
+	//break;
+	//case 'K': // ACTIVIDAD 3, TORBELLINO
+	//{
+	//	particleSystem_->torbellino();
+	//}
+	//break;
+	//case 'L': // ACTIVIDAD 4, EXPLOSION
+	//{
+	//	particleSystem_->generateForcedParticle(5, CreateShape(PxSphereGeometry(2.0f)),
+	//		1.0f, // Mass
+	//		Vector4(0.0f, 1.0f, 0.0f, 1.0f), // Color
+	//		Vector3(0.0f, 29.0f, 0.0f), // Pos
+	//		Vector3(0.0f, 0.0f, 0.0f), // Vel  
+	//		Vector3(0.0f, 0.0f, 0.0f), // Accel
+	//		0.9f,
+	//		20.0f);
+	//	particleSystem_->generateForcedParticle(5, CreateShape(PxSphereGeometry(2.0f)),
+	//		2.0f, // Mass
+	//		Vector4(0.2f, 1.0f, 0.0f, 1.0f), // Color
+	//		Vector3(20.0f, 20.0f, 0.0f), // Pos
+	//		Vector3(0.0f, 0.0f, 0.0f), // Vel  
+	//		Vector3(0.0f, 0.0f, 0.0f), // Accel
+	//		0.9f,
+	//		20.0f);
+	//	particleSystem_->generateForcedParticle(5, CreateShape(PxSphereGeometry(2.0f)),
+	//		3.0f, // Mass
+	//		Vector4(0.4f, 1.0f, 0.0f, 1.0f), // Color
+	//		Vector3(0.0f, 30.0f, 30.0f), // Pos
+	//		Vector3(0.0f, 0.0f, 0.0f), // Vel  
+	//		Vector3(0.0f, 0.0f, 0.0f), // Accel
+	//		0.9f,
+	//		20.0f);
+	//	particleSystem_->generateForcedParticle(5, CreateShape(PxSphereGeometry(2.0f)),
+	//		4.0f, // Mass
+	//		Vector4(0.6f, 1.0f, 0.0f, 1.0f), // Color
+	//		Vector3(0.0f, 10.0f, 20.0f), // Pos
+	//		Vector3(0.0f, 0.0f, 0.0f), // Vel  
+	//		Vector3(0.0f, 0.0f, 0.0f), // Accel
+	//		0.9f,
+	//		20.0f);
+	//	particleSystem_->generateForcedParticle(5, CreateShape(PxSphereGeometry(2.0f)),
+	//		5.0f, // Mass
+	//		Vector4(0.8f, 1.0f, 0.0f, 1.0f), // Color
+	//		Vector3(15.0f, 50.0f, 0.0f), // Pos
+	//		Vector3(0.0f, 0.0f, 0.0f), // Vel  
+	//		Vector3(0.0f, 0.0f, 0.0f), // Accel
+	//		0.9f,
+	//		20.0f);
+	//}
+	//break;
+	//case 'M': // ACTIVIDAD 4, EXPLOSION
+	//{
+	//	particleSystem_->explosion();
+	//}
+	//break;
+	//case 'Z':
+	//{
+	//	particleSystem_->generateSpringDemo1(); // Anchored spring
+	//}
+	//break;
+	//case 'U':
+	//{
+	//	particleSystem_->moreSpringK(10);
+	//}
+	//break;
+	//case 'I':
+	//{
+	//	particleSystem_->lessSpringK(10);
+	//}
+	//break;
+	//case 'X':
+	//{
+	//	particleSystem_->generateSpringDemo2();
+	//}
+	//break;
+	//case 'C':
+	//{
+	//	particleSystem_->generateElasticBand();
+	//}
+	//break;
+	//case 'V':
+	//{
+	//	particleSystem_->generateSlinky();
+	//}
+	//break;
+	//case 'B':
+	//{
+	//	particleSystem_->generateBuoyancyDemo();
+	//}
+	//break;
+	//case 'O':
+	//{
+	//	particleSystem_->changeVolume();
+	//}
+	//case 'P':
+	//{
+	//	particleSystem_->changeLiquidDensity(1840.0f); // Ácido sulfúrico
+	//}
+	//break;
 	}
 }
 

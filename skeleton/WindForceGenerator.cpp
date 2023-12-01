@@ -41,7 +41,7 @@ bool WindForceGenerator::withinBox(Particle* p)
 		return true;
 	}
 	else {
-		cout << "Out" << endl;
+		
 		return false;
 	}
 }
