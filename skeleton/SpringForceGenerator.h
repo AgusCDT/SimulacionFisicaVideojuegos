@@ -13,6 +13,7 @@ public:
 	virtual ~SpringForceGenerator(){}
 
 	virtual void updateForce(Particle* p, double t);
+	virtual void updateForce(rigid_body rb, double t) {}
 
 	inline void moreK(double k) { k_ += k; }
 	inline void lessK(double k) { k_ -= k; }

@@ -15,6 +15,7 @@ public:
 	ExplosionForceGenerator(float K, float timeConst, Vector3 origin, float vel, float radius);
 	virtual ~ExplosionForceGenerator() {}
 	virtual void updateForce(Particle* particle, double t);
+	virtual void updateForce(rigid_body rb, double t) {}
 };
 #endif // !EXPLOSION_FORCE_GENERATOR_H_
 

@@ -6,6 +6,15 @@
 using namespace physx;
 using namespace std;
 
+
+struct rigid_body {
+	PxRigidBody* body_;
+	RenderItem* renderItem_;
+	PxShape* shape_;
+	double lifeTime_;
+	double time_ = 0;
+};
+
 class Particle : public RenderItem {
 protected:
 	int type_;

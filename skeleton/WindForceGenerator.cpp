@@ -29,6 +29,16 @@ void WindForceGenerator::updateForce(Particle* p, double t)
 	}
 }
 
+void WindForceGenerator::updateForce(rigid_body rb, double t)
+{
+	Vector3 v = rb.body_->getLinearVelocity();
+	Vector3 diffVel = windVel_ - v; // Diferencia de velocidad
+	Vector3 dragF;
+	dragF = k1_ * diffVel + k2_ * diffVel.magnitude() * diffVel;
+
+	rb.body_->addForce(dragF);
+}
+
 bool WindForceGenerator::withinBox(Particle* p)
 {
 	Vector3 pos = p->getPos();

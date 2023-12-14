@@ -9,6 +9,7 @@ class ForceGenerator
 {
 public:
 	virtual void updateForce(Particle* p, double t) = 0;
+	virtual void updateForce(rigid_body rb, double t) = 0;
 	string name_;
 	double t_ = 0.0; // If starting negative --> eternal
 	double duration_ = -1e10;

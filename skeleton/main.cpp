@@ -15,7 +15,9 @@
 #include <list>
 #include <iostream>
 
-string display_text = "P2";
+#include "RigidBodyManager.h"
+
+string display_text = "P5";
 
 
 using namespace physx;
@@ -46,6 +48,8 @@ Suelo* suelo_ = nullptr;
 #pragma endregion
 
 ParticleSystem* particleSystem_ = nullptr;
+
+RigidBodyManager* rbManager_ = nullptr;
 
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -78,28 +82,8 @@ void initPhysics(bool interactive)
 #pragma endregion
 	particleSystem_ = new ParticleSystem();
 
-	// Generar suelo
-	PxRigidStatic* Suelo = gPhysics->createRigidStatic(PxTransform({ 0,0,0 }));
-	PxShape* shape = CreateShape(PxBoxGeometry(100, 0.1, 100));
-	Suelo->attachShape(*shape);
-	gScene->addActor(*Suelo);
-	// Pintar suelo
-	RenderItem* item;
-	item = new RenderItem(shape, Suelo, { 0.8, 0.8, 0.8, 1 });
-
-	// Añadir un actor dinámico
-	PxRigidDynamic* new_solid;
-	new_solid = gPhysics->createRigidDynamic(PxTransform({ -70, 200, -70 }));
-	new_solid->setLinearVelocity({ 0, 5, 0 });
-	new_solid->setAngularVelocity({ 0, 0, 0 });
-	PxShape* shape_ad = CreateShape(PxBoxGeometry(5, 5, 5));
-	new_solid->attachShape(*shape_ad);
-	PxRigidBodyExt::updateMassAndInertia(*new_solid, 0.15);
-	gScene->addActor(*new_solid);
-
-	// Pintar actor dinámico
-	RenderItem* dynamic_item;
-	dynamic_item = new RenderItem(shape_ad, new_solid, { 0.8, 0.8, 0.8, 1 });
+	rbManager_ = new RigidBodyManager(gPhysics, gScene);
+	rbManager_->addRigidStatic(Vector3(100, 0.1 , 100), Vector4(1.0, 1.0, 1.0, 1.0), Vector3(0, 0, 0));
 }
 
 
@@ -122,6 +106,11 @@ void stepPhysics(bool interactive, double t)
 
 	if (particleSystem_ != nullptr) {
 		particleSystem_->update(t);
+	}
+
+	if (rbManager_ != nullptr) 
+	{
+		rbManager_->update(t);
 	}
 }
 
@@ -385,6 +374,16 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	//	particleSystem_->changeLiquidDensity(1840.0f); // Ácido sulfúrico
 	//}
 	//break;
+
+
+
+	case 'T':
+		rbManager_->addRigidDynamic(Vector3(5, 5, 5), Vector4(0.5, 0.5, 1.0, 1.0), Vector3(0, 100, 0),
+			Vector3(0, 0, 0), Vector3(0, 0, 0), 0.001, 20);
+		break;
+	case 'Y': 
+		rbManager_->torbellino();
+		break;
 	}
 }
 

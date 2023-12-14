@@ -22,6 +22,21 @@ void WhirlwindForceGenerator::updateForce(Particle* p, double t)
 	}
 }
 
+void WhirlwindForceGenerator::updateForce(rigid_body rb, double t)
+{
+	/*if (withinBox(p)) {*/
+		
+
+		Vector3 pos = rb.body_->getGlobalPose().p;
+		windVel_ = k1_ * Vector3((pos.z - origin_.z), 50 - (pos.y - origin_.y), -pos.x - origin_.x); // Vector torbellino(cambiando el signo de x y z gira hacia un lado o a otro)
+		Vector3 v = rb.body_->getLinearVelocity();
+		Vector3 diffVel = windVel_ - v; // Diferencia de velocidad
+		Vector3 dragF;
+		dragF = k1_ * diffVel + k2_ * diffVel.magnitude() * diffVel;
+		rb.body_->addForce(dragF);
+	//}
+}
+
 bool WhirlwindForceGenerator::withinBox(Particle* p)
 {
 	Vector3 pos = p->getPos();
