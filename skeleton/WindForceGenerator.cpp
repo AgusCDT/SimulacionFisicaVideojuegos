@@ -31,12 +31,14 @@ void WindForceGenerator::updateForce(Particle* p, double t)
 
 void WindForceGenerator::updateForce(rigid_body rb, double t)
 {
-	Vector3 v = rb.body_->getLinearVelocity();
-	Vector3 diffVel = windVel_ - v; // Diferencia de velocidad
-	Vector3 dragF;
-	dragF = k1_ * diffVel + k2_ * diffVel.magnitude() * diffVel;
+	if (withinBox(rb)) {
+		Vector3 v = rb.body_->getLinearVelocity();
+		Vector3 diffVel = windVel_ - v; // Diferencia de velocidad
+		Vector3 dragF;
+		dragF = k1_ * diffVel + k2_ * diffVel.magnitude() * diffVel;
 
-	rb.body_->addForce(dragF);
+		rb.body_->addForce(dragF);
+	}	
 }
 
 bool WindForceGenerator::withinBox(Particle* p)
@@ -45,13 +47,29 @@ bool WindForceGenerator::withinBox(Particle* p)
 	if ((pos.x >= origin_.x && pos.x <= origin_.x + size_.x) &&
 		(pos.y >= origin_.y && pos.y <= origin_.y + size_.y) &&
 		(pos.z >= origin_.z && pos.z <= origin_.z + size_.z)) {
-		cout << pos.x << endl;
+		/*cout << pos.x << endl;
 		cout << pos.y << endl;
-		cout << pos.z << endl;
+		cout << pos.z << endl;*/
 		return true;
 	}
 	else {
 		
+		return false;
+	}
+}
+
+bool WindForceGenerator::withinBox(rigid_body rb)
+{
+	Vector3 pos = rb.body_->getGlobalPose().p;
+	if ((pos.x >= origin_.x && pos.x <= origin_.x + size_.x) &&
+		(pos.y >= origin_.y && pos.y <= origin_.y + size_.y) &&
+		(pos.z >= origin_.z && pos.z <= origin_.z + size_.z)) {
+		/*cout << pos.x << endl;
+		cout << pos.y << endl;
+		cout << pos.z << endl;*/
+		return true;
+	}
+	else {
 		return false;
 	}
 }

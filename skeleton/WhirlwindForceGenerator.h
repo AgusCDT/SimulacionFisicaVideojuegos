@@ -12,6 +12,7 @@ public:
 	virtual void updateForce(rigid_body rb, double t) override;
 
 	virtual bool withinBox(Particle* p) override;
+	virtual bool withinBox(rigid_body rb) override;
 };
 #endif // !WHIRLWIND_FORCE_GENERATOR_H_
 

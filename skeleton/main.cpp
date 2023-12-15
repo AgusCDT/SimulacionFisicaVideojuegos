@@ -377,12 +377,21 @@ void keyPress(unsigned char key, const PxTransform& camera)
 
 
 
-	case 'T':
-		rbManager_->addRigidDynamic(Vector3(5, 5, 5), Vector4(0.5, 0.5, 1.0, 1.0), Vector3(0, 100, 0),
+	case 'R':
+		rbManager_->addRigidDynamic(Vector3(3.5, 3.5, 3.5), Vector4(0.5, 0.5, 1.0, 1.0), Vector3(0, 100, 0),
 			Vector3(0, 0, 0), Vector3(0, 0, 0), 0.001, 20);
 		break;
-	case 'Y': 
+	case 'T': 
 		rbManager_->torbellino();
+		break;
+	case 'Y':
+		rbManager_->explosion();
+		break;
+	case 'U':
+		rbManager_->viento();
+		break;
+	case 'I':
+		rbManager_->generateSpringDemo1();
 		break;
 	}
 }

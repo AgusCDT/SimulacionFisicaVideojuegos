@@ -19,6 +19,7 @@ public:
 	virtual void updateForce(rigid_body rb, double t) override;
 
 	virtual bool withinBox(Particle* p); // Comprueba si la particula esta dentro del rango de accion del viento
+	virtual bool withinBox(rigid_body rb);
 };
 #endif // !WIND_FORCE_GENERATOR_H_
 

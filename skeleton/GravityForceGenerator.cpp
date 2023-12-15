@@ -14,3 +14,8 @@ void GravityForceGenerator::updateForce(Particle* p, double t)
 	// Apply the mass scaled gravity
 	p->addForce(gravity_ * (1 / p->getInverseMass()));
 }
+
+void GravityForceGenerator::updateForce(rigid_body rb, double t)
+{
+	rb.body_->addForce(gravity_ * rb.body_->getMass());
+}

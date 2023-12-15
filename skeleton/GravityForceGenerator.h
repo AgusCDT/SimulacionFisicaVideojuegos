@@ -12,7 +12,7 @@ public:
 	GravityForceGenerator(const Vector3& g);
 
 	virtual void updateForce(Particle* p, double t);
-	virtual void updateForce(rigid_body rb, double t) {}
+	virtual void updateForce(rigid_body rb, double t);
 
 	inline void setGravity(Vector3 g) { gravity_ = g; }
 };

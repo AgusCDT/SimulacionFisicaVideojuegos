@@ -24,9 +24,7 @@ void WhirlwindForceGenerator::updateForce(Particle* p, double t)
 
 void WhirlwindForceGenerator::updateForce(rigid_body rb, double t)
 {
-	/*if (withinBox(p)) {*/
-		
-
+	if (withinBox(rb)) {
 		Vector3 pos = rb.body_->getGlobalPose().p;
 		windVel_ = k1_ * Vector3((pos.z - origin_.z), 50 - (pos.y - origin_.y), -pos.x - origin_.x); // Vector torbellino(cambiando el signo de x y z gira hacia un lado o a otro)
 		Vector3 v = rb.body_->getLinearVelocity();
@@ -34,7 +32,7 @@ void WhirlwindForceGenerator::updateForce(rigid_body rb, double t)
 		Vector3 dragF;
 		dragF = k1_ * diffVel + k2_ * diffVel.magnitude() * diffVel;
 		rb.body_->addForce(dragF);
-	//}
+	}
 }
 
 bool WhirlwindForceGenerator::withinBox(Particle* p)
@@ -46,7 +44,21 @@ bool WhirlwindForceGenerator::withinBox(Particle* p)
 		return true;
 	}
 	else {
-		cout << "Out" << endl;
+		//cout << "Out" << endl;
+		return false;
+	}
+}
+
+bool WhirlwindForceGenerator::withinBox(rigid_body rb)
+{
+	Vector3 pos = rb.body_->getGlobalPose().p;
+	if ((pos.x >= origin_.x - size_.x && pos.x <= origin_.x + size_.x) &&
+		(pos.y >= origin_.y - size_.y && pos.y <= origin_.y + size_.y) &&
+		(pos.z >= origin_.z - size_.z && pos.z <= origin_.z + size_.z)) {
+		return true;
+	}
+	else {
+		//cout << "Out" << endl;
 		return false;
 	}
 }
