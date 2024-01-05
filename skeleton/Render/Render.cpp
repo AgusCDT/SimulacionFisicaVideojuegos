@@ -249,12 +249,11 @@ void setupDefaultWindow(const char *name)
 
 	glutInit(&argc, argv);
 	
-	glutInitWindowSize(512, 512);
+	glutInitWindowSize(1920, 1080); // 512*512
 	glutInitDisplayMode(GLUT_RGB|GLUT_DOUBLE|GLUT_DEPTH);
 	int mainHandle = glutCreateWindow(name);
 	glutSetWindow(mainHandle);
 	glutReshapeFunc(reshapeCallback);
-	
 	delete[] namestr;
 }
 
@@ -289,7 +288,9 @@ void startRender(const PxVec3& cameraEye, const PxVec3& cameraDir, PxReal clipNe
 	// Display text
 	glColor4f(1.0f, 0.2f, 0.2f, 1.0f);
 	drawText(display_text, 0, 0);
-
+	drawText("+", 256, 256);
+	drawText("Platillos destruidos: ", 0, 470);
+	drawText(scoreText_, 80, 470);
 	// Setup camera
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -394,11 +395,11 @@ void drawText(const std::string& text, int x, int y)
 	glPushMatrix();
 	//glLoadIdentity();
 	glRasterPos2i(x, y);
-
+	
 	int length = text.length();
 
 	for (int i = 0; i < length; i++) {
-		glutBitmapCharacter(GLUT_BITMAP_9_BY_15, (int)text[i]);
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, (int)text[i]);
 	}
 	glPopMatrix();
 	glMatrixMode(GL_PROJECTION);

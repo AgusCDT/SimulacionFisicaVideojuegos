@@ -13,6 +13,7 @@ struct rigid_body {
 	PxShape* shape_;
 	double lifeTime_;
 	double time_ = 0;
+	bool alive_ = false;
 };
 
 class Particle : public RenderItem {

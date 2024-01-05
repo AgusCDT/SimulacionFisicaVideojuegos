@@ -31,7 +31,7 @@ void SpringForceGenerator::updateForce(Particle* p, double t)
 void SpringForceGenerator::updateForce(rigid_body rb, double t)
 {
 	// Particle is the particle to apply the force 
-	Vector3 relative_pos_vector = other_->getPos() - rb.body_->getGlobalPose().p;
+	Vector3 relative_pos_vector = otherRB_.body_->getGlobalPose().p - rb.body_->getGlobalPose().p;
 	Vector3 force;
 
 	// normalize: Normalize the relative_pos_vector and return its length

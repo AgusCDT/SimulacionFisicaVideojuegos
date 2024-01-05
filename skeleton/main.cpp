@@ -18,7 +18,7 @@
 #include "RigidBodyManager.h"
 
 string display_text = "P5";
-
+string scoreText_ = " ";
 
 using namespace physx;
 using namespace std;
@@ -74,7 +74,6 @@ void initPhysics(bool interactive)
 	sceneDesc.filterShader = contactReportFilterShader;
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
-
 #pragma region P1
 	//suelo_ = new Suelo(240, 10, 240, Vector4(0.0f, 0.0f, 0.0f, 1.0f)); // "Suelo"
 
@@ -83,7 +82,6 @@ void initPhysics(bool interactive)
 	particleSystem_ = new ParticleSystem();
 
 	rbManager_ = new RigidBodyManager(gPhysics, gScene);
-	rbManager_->addRigidStatic(Vector3(100, 0.1 , 100), Vector4(1.0, 1.0, 1.0, 1.0), Vector3(0, 0, 0));
 }
 
 
@@ -111,7 +109,9 @@ void stepPhysics(bool interactive, double t)
 	if (rbManager_ != nullptr) 
 	{
 		rbManager_->update(t);
+		scoreText_ = to_string(rbManager_->getPlatillosDestruidos());
 	}
+	
 }
 
 // Function to clean data
@@ -378,7 +378,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 
 
 	case 'R':
-		rbManager_->addRigidDynamic(Vector3(3.5, 3.5, 3.5), Vector4(0.5, 0.5, 1.0, 1.0), Vector3(0, 100, 0),
+		rbManager_->addRigidDynamic(1, Vector3(3.5, 3.5, 3.5), Vector4(0.5, 0.5, 1.0, 1.0), Vector3(0, 100, -50),
 			Vector3(0, 0, 0), Vector3(0, 0, 0), 0.001, 20);
 		break;
 	case 'T': 
@@ -392,6 +392,11 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		break;
 	case 'I':
 		rbManager_->generateSpringDemo1();
+		break;
+	case 'E':
+		if(rbManager_->numRBs_ < MAX_RBS)
+		rbManager_->addRigidDynamicShot(2, Vector3(1, 0, 0), Vector4(1.0, 0.6, 0.0, 1.0), GetCamera()->getTransform().p,
+			Vector3(GetCamera()->getDir().x, GetCamera()->getDir().y, GetCamera()->getDir().z)* 100, Vector3(0, 0, 0), 1, 3);
 		break;
 	}
 }
