@@ -92,9 +92,7 @@ rigid_body RigidBodyManager::addRigidDynamic(int shape, Vector3 dim, Vector4 col
 
 	rb.body_ = new_solid;
 	rb.lifeTime_ = lifetime;
-	rb.body_->setName("b");
 	rigid_bodies_.push_back(rb);
-	/*rbs_.push_back(rb);*/
 	numRBs_++;
 	return rb;
 }
@@ -128,7 +126,6 @@ rigid_body RigidBodyManager::addRigidDynamicShot(int shape, Vector3 dim, Vector4
 
 		sh.body_ = new_solid;
 		sh.lifeTime_ = lifetime;
-		sh.body_->setName("a");
 		shots_.push_back(sh);
 		numRBs_++;
 		return sh;
@@ -239,44 +236,12 @@ void RigidBodyManager::createScenario()
 	bunkers_[1] = addRigidStatic(1, Vector3(10, 2, 2), Vector4(0.0, 0.0, 0.0, 1.0), Vector3(60, 2, -130));
 	bunkers_[2] = addRigidStatic(1, Vector3(10, 2, 2), Vector4(0.0, 0.0, 0.0, 1.0), Vector3(-40, 2, -100));
 
+	f3 = new AnchoredSpringFG(500, 30, { bunkers_[2]->getGlobalPose().p.x, bunkers_[2]->getGlobalPose().p.y, bunkers_[2]->getGlobalPose().p.z - 10 });
+
 }
 
 void RigidBodyManager::collisions()
 {
-	for (auto shot : shots_) {
-		for (auto rb : rigid_bodies_) {
-			if (shot.body_ != nullptr) {
-				if (rb.body_ != nullptr) {
-					if (shot.body_->getWorldBounds().intersects(rb.body_->getWorldBounds())) {
-						rb.renderItem_->release();
-						rb.body_->release();
-						//rigid_bodies_.erase(find(rigid_bodies_.begin(), rigid_bodies_.end(), rb));
-						/*rb.alive_ = true;
-						shot.alive_ = true;*/
-					}
-				}
-			}	
-		}
-	}
-
-	/*for (auto it = rigid_bodies_.begin(); it != rigid_bodies_.end();) {
-		for (auto it2 = shots_.begin(); it != shots_.end();) {
-			
-			if (it2->body_->getWorldBounds().intersects(it->body_->getWorldBounds())) {
-				rbForceRegistry_->deleteRigidBodyRegistry(*(it2));
-				gScene_->removeActor(*(it2->body_));
-				(it2->body_)->detachShape(*(it2->shape_));
-				(it2->renderItem_)->release();
-				(it2->body_)->release();
-				it2 = rigid_bodies_.erase((it2));
-				numRBs_--;
-			}
-			else {
-				it2++;
-			}
-		}
-		it++;
-	}*/
 }
 
 void RigidBodyManager::generatePlatos(double t)
@@ -287,24 +252,22 @@ void RigidBodyManager::generatePlatos(double t)
 
 	if (timeBunker1_ > 3) {
 		rigid_body r = addRigidDynamic(1, Vector3(1.5, 0.1, 1.5), Vector4(1.0, 0.2, 0.0, 1.0), bunkers_[0]->getGlobalPose().p - Vector3(0, 0, 6),
-			Vector3(0, 20, 0), Vector3(0, 0, 0), 0.01, 40);
+			Vector3(0, 20, 0), Vector3(0, 0, 0), 0.01, 7);
 		rbForceRegistry_->addRegistry(whirlForceGen_, r);
 		timeBunker1_ = rand() % 2;
 	}
 	if (timeBunker2_ > 9) {
 		rigid_body r = addRigidDynamic(1, Vector3(1.5, 0.1, 1.5), Vector4(1.0, 0.2, 0.0, 1.0), bunkers_[1]->getGlobalPose().p - Vector3(0, 0, 6),
-			Vector3(0, 20, 0), Vector3(0, 0, 0), 0.01, 40);
+			Vector3(0, 20, 0), Vector3(0, 0, 0), 0.01, 7);
 		rbForceRegistry_->addRegistry(wForceGen_, r);
 		timeBunker2_ = rand() % 8;
 	}
 	if (numRBs_ < MAX_RBS - 1) {
 		if (timeBunker3_ > 8) {
-			rigid_body r1 = addRigidDynamic(1, Vector3(1.5, 0.1, 1.5), Vector4(1.0, 0.6, 0.0, 1.0), bunkers_[2]->getGlobalPose().p - Vector3(0, -8, 6),
-				Vector3(0, 40, 0), Vector3(0, 0, 0), 0.01, 40);
-			rigid_body r2 = addRigidDynamic(1, Vector3(1.5, 0.1, 1.5), Vector4(1.0, 0.2, 0.0, 1.0), bunkers_[2]->getGlobalPose().p - Vector3(0, 0, 6),
-				Vector3(0, 40, 0), Vector3(0, 0, 0), 0.01, 40);
-			SpringForceGenerator* f1 = new SpringForceGenerator(1, 10, r2);
-			rbForceRegistry_->addRegistry(f1, r1);
+			rigid_body r = addRigidDynamic(1, Vector3(1.5, 0.1, 1.5), Vector4(1.0, 0.6, 0.0, 1.0), bunkers_[2]->getGlobalPose().p - Vector3(0, -16, 6),
+				Vector3(0, 40, 0), Vector3(0, 0, 0), 0.01, 7);
+			
+			rbForceRegistry_->addRegistry(f3, r);			
 			timeBunker3_ = rand() % 7;
 		}
 	}	

@@ -395,8 +395,8 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		break;
 	case 'E':
 		if(rbManager_->numRBs_ < MAX_RBS)
-		rbManager_->addRigidDynamicShot(2, Vector3(1, 0, 0), Vector4(1.0, 0.6, 0.0, 1.0), GetCamera()->getTransform().p,
-			Vector3(GetCamera()->getDir().x, GetCamera()->getDir().y, GetCamera()->getDir().z)* 100, Vector3(0, 0, 0), 1, 3);
+		rbManager_->addRigidDynamicShot(2, Vector3(0.5, 0, 0), Vector4(1.0, 0.0, 0.0, 1.0), GetCamera()->getTransform().p,
+			Vector3(GetCamera()->getDir().x, GetCamera()->getDir().y, GetCamera()->getDir().z)* 300, Vector3(0, 0, 0), 0.5, 2);
 		break;
 	}
 }
