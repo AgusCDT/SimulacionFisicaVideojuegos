@@ -10,8 +10,8 @@
 #include <vector>
 
 extern bool gameOver_;
-const int MAX_RBS = 100; // Número máximo de RBs que pueden existir
-const int PLATILLOS_TO_WIN = 1; // Platillos necesarios para ganar
+const int MAX_RBS = 1000; // Número máximo de RBs que pueden existir
+const int PLATILLOS_TO_WIN = 10; // Platillos necesarios para ganar
 
 class RigidBodyManager
 {
@@ -49,7 +49,7 @@ protected:
 	int platillosDestruidos_; // Platillos que vas destruyendo
 	double matchTimer_; // Tiempo en partida
 
-	double timeToShoot_ = 0;
+	double timeToShoot_ = 0; // Tiempo para manejar cuando disparar
 
 public:
 	RigidBodyManager(PxPhysics* gPhysics, PxScene* gScene);
@@ -60,10 +60,10 @@ public:
 	rigid_body addRigidDynamic(int shape, Vector3 dim, Vector4 color, Vector3 pos, Vector3 velocity, Vector3 angularvelocity, float density, double lifetime, int type);
 	rigid_body addRigidDynamicShot(int shape, Vector3 dim, Vector4 color, Vector3 pos, Vector3 velocity, Vector3 angularvelocity, float density, double lifetime);
 	void update(double t);
-	void updateDynamic(double t);
-	void updateDynamicShot(double t);
-	void deleteRBs();
-	void generateSemiCircleOrigin();
+	void updateDynamic(double t); // Actualiza los platillos
+	void updateDynamicShot(double t); // Actualiza los disparos
+	void deleteRBs(); // Elimina los RBs
+	void generateSemiCircleOrigin(); // Genera el RB origen para la generación de platillos en semicirculo
 	void torbellino(); // Añade el generador de torbellino a los RBs
 	void explosion(); // Añade el generador de explosión a los RBs
 	void viento(); // Añade el generador de viento a los RBs

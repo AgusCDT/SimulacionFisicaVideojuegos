@@ -30,7 +30,7 @@ public:
 	list<Particle*> generateFireworkCircle();
 	list<Particle*> generateFireworkSnowy();
 
-	list<rigid_body> generateSemiCircle();
+	list<rigid_body> generateSemiCircle(); // Genera platillos en una semicircunferencia
 
 	inline void changeDistribution(double m, double v) { m_ = m; v_ = v; };
 };

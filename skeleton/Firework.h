@@ -12,10 +12,6 @@ private:
 	PxPhysics* gPhysics_;
 	PxScene* gScene_;
 
-	Vector3 posRB_;
-	Vector3 velRB_;
-	int typeRB_;
-
 public:
 	Firework(int type, PxShape* shape, float mass, Vector4 color, Vector3 pos, Vector3 vel, Vector3 accel, float damping, double lifeTime) :
 		Particle(type, shape, mass, color, pos, vel, accel, damping, lifeTime) {};
@@ -26,7 +22,6 @@ public:
 	list<Particle*> explode();
 	list<rigid_body> explodeRB(rigid_body rb);
 	void addGenerator(ParticleGenerator* p);
-	/*virtual Particle* clone() const;*/
 	rigid_body createFireworkRB(Vector3 dim, Vector4 color, Vector3 pos, Vector3 velocity, Vector3 angularvelocity, float density, double lifetime);
 
 };

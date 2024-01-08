@@ -15,7 +15,7 @@
 
 #include "RigidBodyManager.h"
 
-string display_text = "ProyectoSIM";
+string display_text = "Proyecto: Tiro Pichon";
 string scoreText_ = " "; // Texto para el scoring (Render)
 string matchTimerText_ = " "; // Texto para el tiempo final obtenido(Render)
 bool gameOver_ = false; // Variable para detectar el final del juego
@@ -122,11 +122,6 @@ void keyPress(unsigned char key, const PxTransform& camera)
 			rbManager_->addRigidDynamicShot(2, Vector3(1.0, 0, 0), Vector4(1.0, 0.0, 0.0, 1.0), GetCamera()->getTransform().p,
 				Vector3(GetCamera()->getDir().x, GetCamera()->getDir().y, GetCamera()->getDir().z) * 300, Vector3(0, 0, 0), 0.25, 2);
 		}		
-		break;
-	case 'Z':
-		/*rbManager_->generateFirework(2, Vector3(1, 0, 0), Vector4(1.0, 0.5, 0.5, 1.0), Vector3(0, 10, -80),
-			Vector3(0, 20, 0), Vector3(0, 0, 0), 0.001, 3, 1);*/
-		
 		break;
 	}
 }

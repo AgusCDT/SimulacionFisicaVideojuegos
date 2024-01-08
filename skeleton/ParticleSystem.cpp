@@ -8,6 +8,13 @@ ParticleSystem::ParticleSystem()
 
 ParticleSystem::~ParticleSystem()
 {
+	list<Particle*>::iterator it = particles_.begin();
+	while (it != particles_.end()) {
+		auto aux = it;
+		++aux;		
+		onParticleDeath(*it);		
+		it = aux;
+	}
 	particles_.clear();
 }
 

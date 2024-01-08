@@ -44,7 +44,7 @@ public:
 
 	// Method to generate a Firework with the appropiate type
 	void generateFirework(int type, PxShape* shape, float mass, Vector4 color, Vector3 pos, Vector3 vel, Vector3 accel, float damping, double lifeTime);
-	void generateTracaFinal();
+	void generateTracaFinal(); // Genera los fireworks cuando la partida acaba
 	void generateForcedParticle(int type, PxShape* shape, float mass, Vector4 color, Vector3 pos, Vector3 vel, Vector3 accel, float damping, double lifeTime);
 
 	ParticleGenerator* getParticleGenerator(const string& n) { return nullptr; } // Gets a particle generator with name...

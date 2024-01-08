@@ -1,8 +1,17 @@
 # SimulacionFisicaVideojuegos
 Repositorio de las prácticas de la asignatura de Simulación Física de Videojuegos
 
-En la carpeta skeleton estará vuestro código fuente
+Proyecto: Tiro Pichón
 
-Necesitaréis además descomprimir el archivo que se indica a continuación en la raíz del repositorio:
+## Manual de usuario
+El juego consta de dos controles sencillos:
+- Click izquierdo: para mover la cámara/apuntar.
+- Tecla "E": para disparar.
 
-Carpetas bin y common https://ucomplutense-my.sharepoint.com/:u:/g/personal/davalejo_ucm_es/EZcsdyIoqTFOrF4hdfkVYk0BJZ9IycJ3QqXQFwaXVrlSKg?e=pfs6IO
+En cuanto a la UI:
+- Score(arriba a la izquierda): muestra el número de platillos que llevas destruidos.
+- Nombre del proyecto(abajo a la izquierda).
+- Símbolo "+" (en el centro de la pantalla): para ayudar con el apuntado.
+
+Al finalizar, se mostrará un texto de cuántos segundos has tardado en completar el juego.
+En el RigidBodyManager están las constantes para el máximo nº de Rigidbody y el nº de platillos para ganar.

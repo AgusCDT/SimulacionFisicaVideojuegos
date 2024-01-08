@@ -47,11 +47,6 @@ rigid_body Firework::createFireworkRB(Vector3 dim, Vector4 color, Vector3 pos, V
 	rb.body_ = new_solid;
 	rb.lifeTime_ = lifetime;
 	rb.typeRB_ = 1;
-	/*posRB_ = rb.body_->getGlobalPose().p;
-	velRB_ = rb.body_->getLinearVelocity();
-	typeRB_ = rb.type_;*/
-
+	
 	return rb;
-	/*rigid_bodies_.push_back(rb);*/
-		/*numRBs_++;*/
 }
