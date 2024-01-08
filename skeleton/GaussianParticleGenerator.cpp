@@ -4,7 +4,15 @@
 GaussianParticleGenerator::GaussianParticleGenerator(Vector3 std_dev_pos, Vector3 std_dev_vel)
 {
 	std_dev_pos_ = std_dev_pos;
-	std_dev_pos_ = std_dev_vel;
+	std_dev_vel_ = std_dev_vel;
+}
+
+GaussianParticleGenerator::GaussianParticleGenerator(Vector3 std_dev_pos, Vector3 std_dev_vel, RigidBodyManager* rbM)
+{
+	std_dev_pos_ = std_dev_pos;
+	std_dev_vel_ = std_dev_vel;
+
+	rbM_ = rbM;
 }
 
 list<Particle*> GaussianParticleGenerator::generateParticles(int type) {
@@ -27,6 +35,22 @@ list<Particle*> GaussianParticleGenerator::generateParticles(int type) {
 		break;
 	}
 	return particles;
+}
+
+list<rigid_body> GaussianParticleGenerator::generateRBs(int type)
+{
+	list<rigid_body> rbs;
+	switch (type)
+	{
+	case 1:
+		break;
+	case 2:
+		return generateSemiCircle();
+		break;
+	default:
+		break;
+	}
+	return rbs;
 }
 
 list<Particle*> GaussianParticleGenerator::generateFirework1() { // Fuego Artificial
@@ -128,4 +152,27 @@ list<Particle*> GaussianParticleGenerator::generateFireworkSnowy() // NEVADA
 	}
 
 	return particles;
+}
+
+list<rigid_body> GaussianParticleGenerator::generateSemiCircle()
+{
+	
+	list<rigid_body> rbs;
+	setNParticles(5);
+	for (int i = 0; i < numParticles_; i++) {
+
+		float time = d_(mt_);
+
+		float a = -(3.14159) * d_(mt_);
+		float x = 6.0f * cos(a);
+		float y = 6.0f * sin(a);
+		Vector3 pos = meanPos_ + Vector3(x, y, 0);
+
+		Vector3 distToCenter = pos - meanPos_;
+
+		rigid_body rb = rbM_->addRigidDynamic(1, Vector3(2.0, 0.2, 2.0), Vector4(1.0, 0.2, 0.0, 1.0), pos,
+			meanVel_ + distToCenter, Vector3(0, 0, 0), 0.03, 7, 3);
+	}
+
+	return rbs;
 }

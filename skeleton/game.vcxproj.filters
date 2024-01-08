@@ -11,8 +11,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="Particle.cpp" />
-    <ClCompile Include="Suelo.cpp" />
-    <ClCompile Include="Diana.cpp" />
     <ClCompile Include="ParticleGenerator.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="GaussianParticleGenerator.cpp" />
@@ -43,9 +41,7 @@
     <ClInclude Include="RenderUtils.hpp" />
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="Particle.h" />
-    <ClInclude Include="Suelo.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Diana.h" />
     <ClInclude Include="ParticleGenerator.h" />
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="GaussianParticleGenerator.h" />

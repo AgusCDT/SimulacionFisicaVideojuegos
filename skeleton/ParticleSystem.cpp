@@ -6,8 +6,18 @@ ParticleSystem::ParticleSystem()
 	createGenerators();
 }
 
+ParticleSystem::~ParticleSystem()
+{
+	particles_.clear();
+}
+
 void ParticleSystem::update(double t)
 {
+	if (gameOver_ == true && generaFirework_ == true) {
+		generateTracaFinal();
+		generaFirework_ = false;
+	}
+	
 	pForceRegistry_->updateForces(t);
 
 	list<Particle*>::iterator it = particles_.begin();
@@ -15,10 +25,18 @@ void ParticleSystem::update(double t)
 		auto aux = it;
 		++aux;
 		if ((*it)->integrate(t)) {
+			if ((*it)->getType() >= 1) {
+				Firework* firework = static_cast<Firework*>(*it);
+				list<Particle*> p = firework->explode();
+				for (auto d : p) {
+					particles_.push_back(d);
+					pForceRegistry_->addRegistry(gForceGen1_, d);
+				}
+			}
 			onParticleDeath(*it);
-		}			
+		}
 		it = aux;
-	}
+	}	
 }
 
 void ParticleSystem::generateFirework(int type, PxShape* shape, float mass, Vector4 color, Vector3 pos, Vector3 vel, Vector3 accel, float damping, double lifeTime)
@@ -38,6 +56,34 @@ void ParticleSystem::generateFirework(int type, PxShape* shape, float mass, Vect
 	else {
 		p_->addGenerator(particleGenerator_.front()); // Gauss
 	}
+}
+
+void ParticleSystem::generateTracaFinal()
+{
+	generateFirework(2, CreateShape(PxSphereGeometry(2.0f)),
+		2.0f, // Mass
+		Vector4(1.0f, 0.0f, 0.0f, 1.0f), // Color
+		Vector3(0, 2, -80),
+		Vector3(0, 1, 0) * 40, // Vel  
+		Vector3(0.0f, -10.0f, 0.0f), // Accel
+		0.9f,
+		3.0f);
+	generateFirework(2, CreateShape(PxSphereGeometry(2.0f)),
+		2.0f, // Mass
+		Vector4(1.0f, 0.0f, 0.0f, 1.0f), // Color
+		Vector3(60, 2, -130),
+		Vector3(0, 1, 0) * 40, // Vel  
+		Vector3(0.0f, -10.0f, 0.0f), // Accel
+		0.9f,
+		3.0f);
+	generateFirework(2, CreateShape(PxSphereGeometry(2.0f)),
+		2.0f, // Mass
+		Vector4(1.0f, 0.0f, 0.0f, 1.0f), // Color
+		Vector3(-40, 2, -100),
+		Vector3(0, 1, 0) * 40, // Vel  
+		Vector3(0.0f, -10.0f, 0.0f), // Accel
+		0.9f,
+		3.0f);
 }
 
 void ParticleSystem::generateForcedParticle(int type, PxShape* shape, float mass, Vector4 color, Vector3 pos, Vector3 vel, Vector3 accel, float damping, double lifeTime)
@@ -64,9 +110,9 @@ void ParticleSystem::createGenerators()
 {
 	// P2
 	/*firework_generator_ = new UniformParticleGenerator(Vector3{ 40,40,40 }, Vector3{ 50,50,50 });
-	particleGenerator_.push_back(firework_generator_);
-	firework_generator_ = new GaussianParticleGenerator(Vector3{ 40,40,40 }, Vector3{ 20,20,20 });
 	particleGenerator_.push_back(firework_generator_);*/
+	firework_generator_ = new GaussianParticleGenerator(Vector3{ 40,40,40 }, Vector3{ 20,20,20 });
+	particleGenerator_.push_back(firework_generator_);
 
 	// P3
 	gForceGen1_ = new GravityForceGenerator({ 0, -9.8f, 0 });

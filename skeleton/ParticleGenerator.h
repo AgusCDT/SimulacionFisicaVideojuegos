@@ -21,6 +21,7 @@ protected:
 
 public:
 	virtual list<Particle*> generateParticles(int type) = 0;
+	virtual list<rigid_body> generateRBs(int type) = 0;
 
 	inline void setOrigin(const Vector3& p) { meanPos_ = p; }
 	inline void setMeanVelocity(const Vector3& v) { meanVel_ = v; }

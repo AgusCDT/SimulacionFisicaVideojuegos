@@ -8,17 +8,17 @@
 #include "RenderUtils.hpp"
 #include "callbacks.hpp"
 
-//#include "Particle.h"
-#include "Suelo.h"
-//#include "Diana.h"
+#include "Particle.h"
 #include "ParticleSystem.h"
 #include <list>
 #include <iostream>
 
 #include "RigidBodyManager.h"
 
-string display_text = "P5";
-string scoreText_ = " ";
+string display_text = "ProyectoSIM";
+string scoreText_ = " "; // Texto para el scoring (Render)
+string matchTimerText_ = " "; // Texto para el tiempo final obtenido(Render)
+bool gameOver_ = false; // Variable para detectar el final del juego
 
 using namespace physx;
 using namespace std;
@@ -29,7 +29,6 @@ PxDefaultErrorCallback	gErrorCallback;
 PxFoundation* gFoundation = NULL;
 PxPhysics* gPhysics = NULL;
 
-
 PxMaterial* gMaterial = NULL;
 
 PxPvd* gPvd = NULL;
@@ -38,17 +37,7 @@ PxDefaultCpuDispatcher* gDispatcher = NULL;
 PxScene* gScene = NULL;
 ContactReportCallback gContactReportCallback;
 
-#pragma region P1
-//Particle* myParticle_ = nullptr; // Particula
-//vector<Particle*> particles_; // CAPAR MAX DE PARTICULAS
-
-Suelo* suelo_ = nullptr;
-
-//Diana* diana_ = nullptr;
-#pragma endregion
-
 ParticleSystem* particleSystem_ = nullptr;
-
 RigidBodyManager* rbManager_ = nullptr;
 
 // Initialize physics engine
@@ -74,11 +63,6 @@ void initPhysics(bool interactive)
 	sceneDesc.filterShader = contactReportFilterShader;
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
-#pragma region P1
-	//suelo_ = new Suelo(240, 10, 240, Vector4(0.0f, 0.0f, 0.0f, 1.0f)); // "Suelo"
-
-	/*diana_ = new Diana(10, 10, 10, Vector4(0.0f, 0.0f, 0.0f, 1.0f));*/
-#pragma endregion
 	particleSystem_ = new ParticleSystem();
 
 	rbManager_ = new RigidBodyManager(gPhysics, gScene);
@@ -94,24 +78,16 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
-#pragma region P1
-	//if (particles_.size() > 0) {
-	//	for (auto e : particles_) {
-	//		e->integrate(t); // Actualizamos atributos de cada particula
-	//	}
-	//}
-#pragma endregion	
 
 	if (particleSystem_ != nullptr) {
 		particleSystem_->update(t);
 	}
-
 	if (rbManager_ != nullptr) 
 	{
 		rbManager_->update(t);
-		scoreText_ = to_string(rbManager_->getPlatillosDestruidos());
-	}
-	
+		scoreText_ = rbManager_->setScoringText(); // Actualización del scoring
+		matchTimerText_ = rbManager_->setWinText();
+	}	
 }
 
 // Function to clean data
@@ -128,14 +104,9 @@ void cleanupPhysics(bool interactive)
 	PxPvdTransport* transport = gPvd->getTransport();
 	gPvd->release();
 	transport->release();
-#pragma region P1
-	/*if (particles_.size() > 0) {
-		for (auto e : particles_) {
-			delete e;
-		}
-	}*/
-#pragma endregion
+
 	delete particleSystem_;
+	 
 	gFoundation->release();
 }
 
@@ -146,257 +117,16 @@ void keyPress(unsigned char key, const PxTransform& camera)
 
 	switch (toupper(key))
 	{
-#pragma region P1
-		//case 'V': // PISTOL
-		//{
-		//	myParticle_ = new Particle(CreateShape(PxSphereGeometry(0.4)), // Shape
-		//		2.0f, // Mass
-		//		Vector4(1.0f, 0.4f, 0.2f, 1.0f), // Color
-		//		Vector3(GetCamera()->getDir().x * 35.0f, 0.0f, GetCamera()->getDir().z * 35.0f), // Vel  // CAMBIAR A SOLO UN GetCamera()->getDir() * 35
-		//		Vector3(0.0f, -1.0f, 0.0f), // Accel
-		//		0.9f); // Damping
-		//	particles_.push_back(myParticle_);
-		//}
-		//break;
-		//case 'B': // ARTILLERY
-		//{
-		//	myParticle_ = new Particle(CreateShape(PxSphereGeometry(1.7)),
-		//		200.0f,
-		//		Vector4(0.0f, 1.0f, 1.0f, 1.0f),
-		//		Vector3(GetCamera()->getDir().x * 40.0f, 30.0f, GetCamera()->getDir().z * 40.0f),
-		//		Vector3(0.0f, -20.0f, 0.0f),
-		//		0.99f);
-		//	particles_.push_back(myParticle_);
-		//}
-		//break;
-		//case 'N': // FIREBALL
-		//{
-		//	myParticle_ = new Particle(CreateShape(PxSphereGeometry(0.8)),
-		//		1.0f,
-		//		Vector4(1.0f, 0.0f, 0.0f, 1.0f),
-		//		Vector3(GetCamera()->getDir().x * 10.0f, 0.0f, GetCamera()->getDir().z * 10.0f),
-		//		Vector3(0.0f, 0.6f, 0.0f),
-		//		0.9f);
-		//	particles_.push_back(myParticle_);
-		//}
-		//break;
-		//case 'M': // LASER
-		//{
-		//	myParticle_ = new Particle(CreateShape(PxSphereGeometry(0.2)),
-		//		0.1f,
-		//		Vector4(0.0f, 0.0f, 1.0f, 1.0f),
-		//		Vector3(GetCamera()->getDir().x * 100.0f, 0.0f, GetCamera()->getDir().z * 100.0f),
-		//		Vector3(0.0f, 0.0f, 0.0f),
-		//		0.99f);
-		//	particles_.push_back(myParticle_);
-		//}
-		//break;
-#pragma endregion
-#pragma region P2
-	//case 'U': // FUEGO ARTIFICIAL
-	//{
-	//	particleSystem_->generateFirework(2, CreateShape(PxSphereGeometry(2.0f)),
-	//		2.0f, // Mass
-	//		Vector4(1.0f, 0.0f, 0.0f, 1.0f), // Color
-	//		GetCamera()->getEye() + Vector3(-90, 0, -90),
-	//		Vector3(0, 1, 0) * 60, // Vel  
-	//		Vector3(0.0f, -10.0f, 0.0f), // Accel
-	//		0.9f,
-	//		4.0f);
-	//}
-	//break;
-	//case 'I': // SNOWY
-	//{
-	//	particleSystem_->generateFirework(4, CreateShape(PxSphereGeometry(2.0f)),
-	//		2.0f, // Mass
-	//		Vector4(1.0f, 1.0f, 1.0f, 0.5f), // Color
-	//		GetCamera()->getEye() + Vector3(-90, 0, -90),
-	//		Vector3(0, 1, 0) * 40, // Vel  
-	//		Vector3(0.0f, -10.0f, 0.0f), // Accel
-	//		0.9f,
-	//		4.0f);
-	//}
-	//break;
-	//case 'O': // CIRCULO
-	//{
-	//	particleSystem_->generateFirework(3, CreateShape(PxSphereGeometry(2.0f)),
-	//		2.0f, // Mass		
-	//		Vector4(0.0f, 1.0f, 1.0f, 1.0f), // Color
-	//		GetCamera()->getEye() + Vector3(-90, 0, -90),
-	//		Vector3(0, 1, 0) * 10, // Vel  
-	//		Vector3(0.0f, -10.0f, 0.0f), // Accel
-	//		0.9f,
-	//		3.5f);
-	//}
-	//break;
-	//case 'P': // LLUVIA
-	//{
-	//	particleSystem_->generateFirework(5, CreateShape(PxSphereGeometry(2.0f)),
-	//		2.0f, // Mass
-	//		Vector4(0.0f, 0.0f, 1.0f, 1.0f), // Color
-	//		GetCamera()->getEye() + Vector3(-90, 0, -90),
-	//		Vector3(0, 1, 0) * 40, // Vel  
-	//		Vector3(0.0f, -10.0f, 0.0f), // Accel
-	//		0.9f,
-	//		3.5f);
-	//}
-	//break;
-	//default:
-	//	particleSystem_->generateFirework(1, CreateShape(PxSphereGeometry(2.0f)),
-	//		2.0f, // Mass
-	//		Vector4(0.0f, 0.0f, 1.0f, 1.0f), // Color
-	//		GetCamera()->getEye() + Vector3(-90, 0, -90),
-	//		Vector3(0, 1, 0) * 40, // Vel  
-	//		Vector3(0.0f, -10.0f, 0.0f), // Accel
-	//		0.9f,
-	//		3.5f);
-	//	break;
-	//}
-#pragma endregion
-	//case 'G':
-	//{
-
-	//	particleSystem_->generateForcedParticle(1, CreateShape(PxSphereGeometry(2.0f)),
-	//		2.0f, // Mass
-	//		Vector4(1.0f, 0.0f, 0.0f, 1.0f), // Color
-	//		Vector3(0.0f, 100.0f, 0.0f), // Pos
-	//		Vector3(0.0f, 0.0f, 0.0f), // Vel  
-	//		Vector3(0.0f, 0.0f, 0.0f), // Accel
-	//		0.9f,
-	//		30.0f);
-	//}
-	//break;
-	//case 'H':// ACTIVIDAD 1, 3 partículas
-	//{
-	//	particleSystem_->gravedad({ 0.0f, -9.8f, 0.0f });
-	//}
-	//break;
-	//case 'J': // ACTIVIDAD 2, VIENTO
-	//{
-	//	particleSystem_->viento();
-	//}
-	//break;
-	//case 'K': // ACTIVIDAD 3, TORBELLINO
-	//{
-	//	particleSystem_->torbellino();
-	//}
-	//break;
-	//case 'L': // ACTIVIDAD 4, EXPLOSION
-	//{
-	//	particleSystem_->generateForcedParticle(5, CreateShape(PxSphereGeometry(2.0f)),
-	//		1.0f, // Mass
-	//		Vector4(0.0f, 1.0f, 0.0f, 1.0f), // Color
-	//		Vector3(0.0f, 29.0f, 0.0f), // Pos
-	//		Vector3(0.0f, 0.0f, 0.0f), // Vel  
-	//		Vector3(0.0f, 0.0f, 0.0f), // Accel
-	//		0.9f,
-	//		20.0f);
-	//	particleSystem_->generateForcedParticle(5, CreateShape(PxSphereGeometry(2.0f)),
-	//		2.0f, // Mass
-	//		Vector4(0.2f, 1.0f, 0.0f, 1.0f), // Color
-	//		Vector3(20.0f, 20.0f, 0.0f), // Pos
-	//		Vector3(0.0f, 0.0f, 0.0f), // Vel  
-	//		Vector3(0.0f, 0.0f, 0.0f), // Accel
-	//		0.9f,
-	//		20.0f);
-	//	particleSystem_->generateForcedParticle(5, CreateShape(PxSphereGeometry(2.0f)),
-	//		3.0f, // Mass
-	//		Vector4(0.4f, 1.0f, 0.0f, 1.0f), // Color
-	//		Vector3(0.0f, 30.0f, 30.0f), // Pos
-	//		Vector3(0.0f, 0.0f, 0.0f), // Vel  
-	//		Vector3(0.0f, 0.0f, 0.0f), // Accel
-	//		0.9f,
-	//		20.0f);
-	//	particleSystem_->generateForcedParticle(5, CreateShape(PxSphereGeometry(2.0f)),
-	//		4.0f, // Mass
-	//		Vector4(0.6f, 1.0f, 0.0f, 1.0f), // Color
-	//		Vector3(0.0f, 10.0f, 20.0f), // Pos
-	//		Vector3(0.0f, 0.0f, 0.0f), // Vel  
-	//		Vector3(0.0f, 0.0f, 0.0f), // Accel
-	//		0.9f,
-	//		20.0f);
-	//	particleSystem_->generateForcedParticle(5, CreateShape(PxSphereGeometry(2.0f)),
-	//		5.0f, // Mass
-	//		Vector4(0.8f, 1.0f, 0.0f, 1.0f), // Color
-	//		Vector3(15.0f, 50.0f, 0.0f), // Pos
-	//		Vector3(0.0f, 0.0f, 0.0f), // Vel  
-	//		Vector3(0.0f, 0.0f, 0.0f), // Accel
-	//		0.9f,
-	//		20.0f);
-	//}
-	//break;
-	//case 'M': // ACTIVIDAD 4, EXPLOSION
-	//{
-	//	particleSystem_->explosion();
-	//}
-	//break;
-	//case 'Z':
-	//{
-	//	particleSystem_->generateSpringDemo1(); // Anchored spring
-	//}
-	//break;
-	//case 'U':
-	//{
-	//	particleSystem_->moreSpringK(10);
-	//}
-	//break;
-	//case 'I':
-	//{
-	//	particleSystem_->lessSpringK(10);
-	//}
-	//break;
-	//case 'X':
-	//{
-	//	particleSystem_->generateSpringDemo2();
-	//}
-	//break;
-	//case 'C':
-	//{
-	//	particleSystem_->generateElasticBand();
-	//}
-	//break;
-	//case 'V':
-	//{
-	//	particleSystem_->generateSlinky();
-	//}
-	//break;
-	//case 'B':
-	//{
-	//	particleSystem_->generateBuoyancyDemo();
-	//}
-	//break;
-	//case 'O':
-	//{
-	//	particleSystem_->changeVolume();
-	//}
-	//case 'P':
-	//{
-	//	particleSystem_->changeLiquidDensity(1840.0f); // Ácido sulfúrico
-	//}
-	//break;
-
-
-
-	case 'R':
-		rbManager_->addRigidDynamic(1, Vector3(3.5, 3.5, 3.5), Vector4(0.5, 0.5, 1.0, 1.0), Vector3(0, 100, -50),
-			Vector3(0, 0, 0), Vector3(0, 0, 0), 0.001, 20);
-		break;
-	case 'T': 
-		rbManager_->torbellino();
-		break;
-	case 'Y':
-		rbManager_->explosion();
-		break;
-	case 'U':
-		rbManager_->viento();
-		break;
-	case 'I':
-		rbManager_->generateSpringDemo1();
-		break;
 	case 'E':
-		if(rbManager_->numRBs_ < MAX_RBS)
-		rbManager_->addRigidDynamicShot(2, Vector3(0.5, 0, 0), Vector4(1.0, 0.0, 0.0, 1.0), GetCamera()->getTransform().p,
-			Vector3(GetCamera()->getDir().x, GetCamera()->getDir().y, GetCamera()->getDir().z)* 300, Vector3(0, 0, 0), 0.5, 2);
+		if (gameOver_ == false && rbManager_->numRBs_ < MAX_RBS) {
+			rbManager_->addRigidDynamicShot(2, Vector3(1.0, 0, 0), Vector4(1.0, 0.0, 0.0, 1.0), GetCamera()->getTransform().p,
+				Vector3(GetCamera()->getDir().x, GetCamera()->getDir().y, GetCamera()->getDir().z) * 300, Vector3(0, 0, 0), 0.25, 2);
+		}		
+		break;
+	case 'Z':
+		/*rbManager_->generateFirework(2, Vector3(1, 0, 0), Vector4(1.0, 0.5, 0.5, 1.0), Vector3(0, 10, -80),
+			Vector3(0, 20, 0), Vector3(0, 0, 0), 0.001, 3, 1);*/
+		
 		break;
 	}
 }

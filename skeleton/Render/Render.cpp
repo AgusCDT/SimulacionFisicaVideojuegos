@@ -287,10 +287,10 @@ void startRender(const PxVec3& cameraEye, const PxVec3& cameraDir, PxReal clipNe
 
 	// Display text
 	glColor4f(1.0f, 0.2f, 0.2f, 1.0f);
-	drawText(display_text, 0, 0);
+	drawText(display_text, 10, 10);
 	drawText("+", 253, 250);
-	drawText("Platillos destruidos: ", 0, 470);
-	drawText(scoreText_, 80, 470);
+	drawText(scoreText_, 10, 470);
+	drawText(matchTimerText_, 200, 300);
 	// Setup camera
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();

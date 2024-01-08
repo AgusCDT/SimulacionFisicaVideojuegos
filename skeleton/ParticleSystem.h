@@ -34,15 +34,17 @@ protected:
 
 	AnchoredSpringFG* f3;
 	BuoyancyForceGenerator* b1;
+
+	bool generaFirework_ = true;
 public:
 	ParticleSystem();
-	virtual ~ParticleSystem() {};
+	virtual ~ParticleSystem();
 
 	void update(double t);
 
 	// Method to generate a Firework with the appropiate type
 	void generateFirework(int type, PxShape* shape, float mass, Vector4 color, Vector3 pos, Vector3 vel, Vector3 accel, float damping, double lifeTime);
-
+	void generateTracaFinal();
 	void generateForcedParticle(int type, PxShape* shape, float mass, Vector4 color, Vector3 pos, Vector3 vel, Vector3 accel, float damping, double lifeTime);
 
 	ParticleGenerator* getParticleGenerator(const string& n) { return nullptr; } // Gets a particle generator with name...
@@ -65,7 +67,6 @@ public:
 	void generateBuoyancyDemo();
 	inline void changeVolume() { b1->changeVolume(); }
 	inline void changeLiquidDensity(float d) { b1->changeLiquidDensity(d); }
-
 };
 
 #endif // !PARTICLE_SYSTEM_H_

@@ -49,6 +49,7 @@
 
 extern std::string display_text;
 extern std::string scoreText_;
+extern std::string matchTimerText_;
 
 namespace Snippets
 {
