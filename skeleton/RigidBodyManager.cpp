@@ -32,7 +32,7 @@ void RigidBodyManager::createGenerators()
 	firework_generator_ = new GaussianParticleGenerator(Vector3{ 40,40,40 }, Vector3{ 20,20,20 }, this);
 	particleGenerator_.push_back(firework_generator_);
 
-	gForceGen_ = new GravityForceGenerator({ 0, 100.0f, 0 });
+	gForceGen_ = new GravityForceGenerator({ 0, 10.0f, 0 });
 	whirlForceGen_ = new WhirlwindForceGenerator(0.2f, Vector3(20.0f, 0.0f, 20.0f), Vector3(200.0f, 100.0f, 200.0f));
 	eForceGen_ = new ExplosionForceGenerator(1000.0f, 100.0f, Vector3(10.0f, 30.0f, 0.0f), 343.0f, 50.0f);
 	wForceGen_ = new WindForceGenerator(1.0f, 1.0f, Vector3(0.0f, 5.0f, 0.0f), Vector3(60, 2, -130), Vector3(10.0f, 50.0f, 10.0f));
@@ -235,7 +235,8 @@ void RigidBodyManager::generateSemiCircleOrigin()
 {
 	if (numRBs_ < MAX_RBS - 5) {
 		addRigidDynamic(2, Vector3(1, 0, 0), Vector4(1.0, 0.7, 0.0, 1.0), bunkers_[2]->getGlobalPose().p - Vector3(0, 0, 6),
-			Vector3(0, 25, 0), Vector3(0, 0, 0), 0.001, 3, 2);
+			Vector3(0, 25, 0), Vector3(0, 0, 0), 0.01, 3, 2);
+
 	}	
 }
 
@@ -295,13 +296,13 @@ void RigidBodyManager::generatePlatos(double t)
 
 	if (timeBunker1_ > 7) {
 		rigid_body r = addRigidDynamic(1, Vector3(2.0, 0.2, 2.0), Vector4(1.0, 0.2, 0.0, 1.0), bunkers_[0]->getGlobalPose().p - Vector3(0, 0, 6),
-			Vector3(0, 20, 0), Vector3(0, 200, 0), 0.01, 7, 0);
+			Vector3(0, 20, 0), Vector3(0, 200, 0), 0.01, 8, 0);
 		rbForceRegistry_->addRegistry(whirlForceGen_, r);
 		timeBunker1_ = rand() % 4;
 	}
 	if (timeBunker2_ > 9) {
 		rigid_body r = addRigidDynamic(1, Vector3(2.0, 0.2, 2.0), Vector4(1.0, 0.2, 0.0, 1.0), bunkers_[1]->getGlobalPose().p - Vector3(0, 0, 6),
-			Vector3(0, 0, 0), Vector3(0, 200, 0), 0.1, 7, 0);
+			Vector3(0, 0, 0), Vector3(0, 200, 0), 0.01, 10, 0);
 		rbForceRegistry_->addRegistry(wForceGen_, r);
 		timeBunker2_ = rand() % 7;
 	}

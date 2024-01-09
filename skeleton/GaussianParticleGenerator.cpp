@@ -156,7 +156,6 @@ list<Particle*> GaussianParticleGenerator::generateFireworkSnowy() // NEVADA
 
 list<rigid_body> GaussianParticleGenerator::generateSemiCircle()
 {
-	
 	list<rigid_body> rbs;
 	setNParticles(5);
 	for (int i = 0; i < numParticles_; i++) {
@@ -171,7 +170,7 @@ list<rigid_body> GaussianParticleGenerator::generateSemiCircle()
 		Vector3 distToCenter = pos - meanPos_;
 
 		rigid_body rb = rbM_->addRigidDynamic(1, Vector3(2.0, 0.2, 2.0), Vector4(1.0, 0.2, 0.0, 1.0), pos,
-			meanVel_ + distToCenter, Vector3(0, 200, 0), 0.03, 7, 3);
+			meanVel_ + distToCenter, Vector3(0, 200, 0), 0.03, 8, 3);
 	}
 
 	return rbs;
